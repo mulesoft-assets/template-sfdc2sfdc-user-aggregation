@@ -14,9 +14,9 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
     
     <flow name="startFlow" doc:name="startFlow" initialState="stopped">
         <poll frequency="${poll.frecuency}" doc:name="Poll" doc:description="Poll responsible for startig the execution of Users Report">
-            <flow-ref name="pullDataFromSFDCFlow" doc:name="Call pullDataFromSFDCFlow"/>
+            <logger level="DEBUG" message="Poll Excecuted" doc:name="Log Poll Execution"/>
         </poll>
-        <logger level="DEBUG" message="Poll Excecuted" doc:name="Log Poll Execution"/>
+        <flow-ref name="pullDataFromSFDCFlow" doc:name="Call pullDataFromSFDCFlow"/>
     </flow>
     
     <flow name="mainIboundFlow" doc:name="mainIboundFlow">
