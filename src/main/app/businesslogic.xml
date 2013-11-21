@@ -1,4 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:spring="http://www.springframework.org/schema/beans" version="EE-3.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
-http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd"></mule>
+<mule xmlns:data-mapper="http://www.mulesoft.org/schema/mule/ee/data-mapper" xmlns:json="http://www.mulesoft.org/schema/mule/json" 
+xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc" 
+xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" 
+xmlns="http://www.mulesoft.org/schema/mule/core" 
+xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" 
+xmlns:spring="http://www.springframework.org/schema/beans" 
+version="EE-3.4.1" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfdc/current/mule-sfdc.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schema/mule/ee/data-mapper/current/mule-data-mapper.xsd">
+    <data-mapper:config name="csvreport_grf" transformationGraphPath="csvreport.grf" doc:name="DataMapper"/>
+  
+    <flow name="pullDataFromSFDCFlow" doc:name="pullDataFromSFDCFlow">
+        <enricher source="#[payload]" target="#[flowVars['usersFromOrgA']]" doc:name="Store result in FlowVar 'usersFromOrgA'">
+            <sfdc:query-all config-ref="SalesforceA" query="SELECT Name, Email, Username, Id  FROM User" doc:name="Query all users from company A"/>
+        </enricher>
+        <enricher source="#[payload]" target="#[flowVars['usersFromOrgB']]" doc:name="Store result in FlowVar 'usersFromOrgB'">
+            <sfdc:query-all config-ref="SalesforceB" query="SELECT Name, Email, Username, Id  FROM User" doc:name="Query all users from company B"/>
+        </enricher>
+        <flow-ref name="mergeUsersFlow" doc:name="Call mergeUsersFlow"/>
+    </flow>
+    
+    <flow name="mergeUsersFlow" doc:name="mergeUsersFlow">
+        <custom-transformer class="org.mule.kicks.transformers.SFDCUsersMegeTransformer" doc:name="Users merge transformer"/>
+        <flow-ref name="reportGenerationFlow" doc:name="Call reportGenerationFlow"/>
+    </flow>
+    
+    <flow name="reportGenerationFlow" doc:name="reportGenerationFlow">
+        <data-mapper:transform config-ref="csvreport_grf" doc:name="CSV Report"/>
+    </flow>
+    
+</mule>
