@@ -9,6 +9,13 @@ import org.mule.api.MuleMessage;
 import org.mule.api.transformer.TransformerException;
 import org.mule.transformer.AbstractMessageTransformer;
 
+/**
+ * This transformer will take to list as input and create a third one that will
+ * be the merge of the previous two. The identity of an element of the list is
+ * defined by its email.
+ * 
+ * @author
+ */
 public class SFDCUsersMerge extends AbstractMessageTransformer {
 
 	private static final String QUERY_COMPANY_A = "usersFromOrgA";
@@ -23,29 +30,31 @@ public class SFDCUsersMerge extends AbstractMessageTransformer {
 		List<Map<String, String>> mergedUsersList = new ArrayList<Map<String, String>>();
 
 		for (Map<String, String> userFromA : usersFromOrgAList) {
-
-			Map<String, String> userFromB = getUserFromListB(userFromA.get("Email"), usersFromOrgBList);
-
 			Map<String, String> newMergedUser = new HashMap<String, String>();
-
+			newMergedUser.put("Email", userFromA.get("Email"));
 			newMergedUser.put("Name", userFromA.get("Name"));
-			newMergedUser.put("Mail", userFromA.get("Email"));
 			newMergedUser.put("IDInA", userFromA.get("Id"));
 			newMergedUser.put("UserNameInA", userFromA.get("Username"));
 
-			newMergedUser.put("IDInB", userFromB.get("Id"));
-			newMergedUser.put("UserNameInB", userFromB.get("Username"));
+			Map<String, String> userFromB = getUserFromList(userFromA.get("Email"), usersFromOrgBList);
+			if (userFromB != null) {
+				newMergedUser.put("IDInB", userFromB.get("Id"));
+				newMergedUser.put("UserNameInB", userFromB.get("Username"));
+			} else {
+				newMergedUser.put("IDInB", "");
+				newMergedUser.put("UserNameInB", "");
+			}
 
 			mergedUsersList.add(newMergedUser);
 		}
 
 		for (Map<String, String> userFromB : usersFromOrgBList) {
-
-			if (!checkExistingUserInA(userFromB.get("Email"), usersFromOrgAList)) {
+			Map<String, String> userFromA = getUserFromList(userFromB.get("Email"), mergedUsersList);
+			if (userFromA == null) {
 				Map<String, String> newMergedUser = new HashMap<String, String>();
 
+				newMergedUser.put("Email", userFromB.get("Email"));
 				newMergedUser.put("Name", userFromB.get("Name"));
-				newMergedUser.put("Mail", userFromB.get("Email"));
 				newMergedUser.put("IDInA", "");
 				newMergedUser.put("UserNameInA", "");
 
@@ -53,41 +62,20 @@ public class SFDCUsersMerge extends AbstractMessageTransformer {
 				newMergedUser.put("UserNameInB", userFromB.get("Username"));
 
 				mergedUsersList.add(newMergedUser);
-			}
 
+			}
 		}
 
 		return mergedUsersList;
 	}
 
-	private Boolean checkExistingUserInA(Object mailFromUserB, List<Map<String, String>> usersFromOrgAList) {
-
-		for (Map<String, String> userFromA : usersFromOrgAList) {
-			if (userFromA.get("Email").equals(mailFromUserB)) {
-				return true;
+	private Map<String, String> getUserFromList(String userMail, List<Map<String, String>> orgList) {
+		for (Map<String, String> user : orgList) {
+			if (user.get("Email").equals(userMail)) {
+				return user;
 			}
 		}
-		return false;
-
-	}
-
-	private Map<String, String> getUserFromListB(Object mailFromUserA, List<Map<String, String>> usersFromOrgBList) {
-
-		Map<String, String> resultingUserFromB = new HashMap<String, String>();
-
-		resultingUserFromB.put("Id", "");
-		resultingUserFromB.put("Username", "");
-
-		for (Map<String, String> userFromB : usersFromOrgBList) {
-			if (userFromB.get("Email").equals((String) mailFromUserA)) {
-				resultingUserFromB.put("Id", userFromB.get("Id"));
-				resultingUserFromB.put("Username", userFromB.get("Username"));
-
-				return resultingUserFromB;
-			}
-		}
-
-		return resultingUserFromB;
+		return null;
 	}
 
 }

@@ -17,7 +17,7 @@
 <Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
 <Field __sourcePath="{}/UserFromSFDC/IDInA" containerType="SINGLE" label="IDInA" name="IDInA" type="string"/>
 <Field __sourcePath="{}/UserFromSFDC/IDInB" containerType="SINGLE" label="IDInB" name="IDInB" type="string"/>
-<Field __sourcePath="{}/UserFromSFDC/Mail" containerType="SINGLE" label="Mail" name="Mail" type="string"/>
+<Field __sourcePath="{}/UserFromSFDC/Email" containerType="SINGLE" label="Email" name="Mail" type="string"/>
 <Field __sourcePath="{}/UserFromSFDC/Name" containerType="SINGLE" label="Name" name="Name" type="string"/>
 <Field __sourcePath="{}/UserFromSFDC/UserNameInA" containerType="SINGLE" label="UserNameInA" name="UserNameInA" type="string"/>
 <Field __sourcePath="{}/UserFromSFDC/UserNameInB" containerType="SINGLE" label="UserNameInB" name="UserNameInB" type="string"/>
@@ -34,7 +34,7 @@
 <Context outPort="0" sequenceField="__id" xpath=".">
   <Mapping cloverField="IDInA" trim="true" xpath="IDInA"/>
   <Mapping cloverField="IDInB" trim="true" xpath="IDInB"/>
-  <Mapping cloverField="Mail" trim="true" xpath="Mail"/>
+  <Mapping cloverField="Mail" trim="true" xpath="Email"/>
   <Mapping cloverField="Name" trim="true" xpath="Name"/>
   <Mapping cloverField="UserNameInA" trim="true" xpath="UserNameInA"/>
   <Mapping cloverField="UserNameInB" trim="true" xpath="UserNameInB"/>
