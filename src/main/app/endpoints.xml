@@ -16,12 +16,12 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
         <poll frequency="${poll.frecuency}" doc:name="Poll" doc:description="Poll responsible for startig the execution of Users Report">
             <logger level="DEBUG" message="Poll Excecuted" doc:name="Log Poll Execution"/>
         </poll>
-        <flow-ref name="pullDataFromSFDCFlow" doc:name="Call pullDataFromSFDCFlow"/>
+        <flow-ref name="mainFlow" doc:name="mainFlow"/>
     </flow>
     
     <flow name="mainIboundFlow" doc:name="mainIboundFlow">
         <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8081" path="testsfdc" doc:name="HTTP"/>
-        <flow-ref name="pullDataFromSFDCFlow" doc:name="Flow Reference"/>
+        <flow-ref name="mainFlow" doc:name="mainFlow"/>
     </flow>
     
 </mule>

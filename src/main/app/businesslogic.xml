@@ -15,6 +15,12 @@ http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfd
 http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
 http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schema/mule/ee/data-mapper/current/mule-data-mapper.xsd">
     <data-mapper:config name="csvreport_grf" transformationGraphPath="csvreport.grf" doc:name="DataMapper"/>
+    <flow name="mainFlow" doc:name="mainFlow">
+        <flow-ref name="pullDataFromSFDCFlow" doc:name="gatherData"/>
+        <flow-ref name="mergeUsersFlow" doc:name="processData"/>
+        <flow-ref name="reportGenerationFlow" doc:name="formatOutput"/>
+        <exception-strategy ref="defaultChoiseExceptionStrategy" doc:name="Reference Exception Strategy"/>
+    </flow>
   
     <flow name="pullDataFromSFDCFlow" doc:name="pullDataFromSFDCFlow">
         <enricher source="#[payload]" target="#[flowVars['usersFromOrgA']]" doc:name="Store result in FlowVar 'usersFromOrgA'">
@@ -23,12 +29,10 @@ http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schem
         <enricher source="#[payload]" target="#[flowVars['usersFromOrgB']]" doc:name="Store result in FlowVar 'usersFromOrgB'">
             <sfdc:query-all config-ref="SalesforceB" query="SELECT Name, Email, Username, Id  FROM User" doc:name="Query all users from company B"/>
         </enricher>
-        <flow-ref name="mergeUsersFlow" doc:name="Call mergeUsersFlow"/>
     </flow>
     
     <flow name="mergeUsersFlow" doc:name="mergeUsersFlow">
         <custom-transformer class="org.mule.kicks.transformers.SFDCUsersMerge" doc:name="Users merge transformer"/>
-        <flow-ref name="reportGenerationFlow" doc:name="Call reportGenerationFlow"/>
     </flow>
     
     <flow name="reportGenerationFlow" doc:name="reportGenerationFlow">
