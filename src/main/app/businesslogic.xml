@@ -27,7 +27,7 @@ http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schem
     </flow>
     
     <flow name="mergeUsersFlow" doc:name="mergeUsersFlow">
-        <custom-transformer class="org.mule.kicks.transformers.SFDCUsersMegeTransformer" doc:name="Users merge transformer"/>
+        <custom-transformer class="org.mule.kicks.transformers.SFDCUsersMerge" doc:name="Users merge transformer"/>
         <flow-ref name="reportGenerationFlow" doc:name="Call reportGenerationFlow"/>
     </flow>
     

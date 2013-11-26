@@ -2,22 +2,20 @@ package org.mule.kicks.transformers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.mule.api.MuleMessage;
 import org.mule.api.transformer.TransformerException;
 import org.mule.transformer.AbstractMessageTransformer;
 
-public class SFDCUsersMegeTransformer extends AbstractMessageTransformer {
+public class SFDCUsersMerge extends AbstractMessageTransformer {
 
 	private static final String QUERY_COMPANY_A = "usersFromOrgA";
 	private static final String QUERY_COMPANY_B = "usersFromOrgB";
 
 	@Override
-	public Object transformMessage(MuleMessage message, String outputEncoding)	throws TransformerException {
+	public Object transformMessage(MuleMessage message, String outputEncoding) throws TransformerException {
 
 		List<Map<String, String>> usersFromOrgAList = message.getInvocationProperty(QUERY_COMPANY_A);
 		List<Map<String, String>> usersFromOrgBList = message.getInvocationProperty(QUERY_COMPANY_B);
@@ -25,7 +23,7 @@ public class SFDCUsersMegeTransformer extends AbstractMessageTransformer {
 		List<Map<String, String>> mergedUsersList = new ArrayList<Map<String, String>>();
 
 		for (Map<String, String> userFromA : usersFromOrgAList) {
-			
+
 			Map<String, String> userFromB = getUserFromListB(userFromA.get("Email"), usersFromOrgBList);
 
 			Map<String, String> newMergedUser = new HashMap<String, String>();
@@ -63,14 +61,14 @@ public class SFDCUsersMegeTransformer extends AbstractMessageTransformer {
 	}
 
 	private Boolean checkExistingUserInA(Object mailFromUserB, List<Map<String, String>> usersFromOrgAList) {
-		
+
 		for (Map<String, String> userFromA : usersFromOrgAList) {
 			if (userFromA.get("Email").equals(mailFromUserB)) {
 				return true;
 			}
 		}
 		return false;
-		
+
 	}
 
 	private Map<String, String> getUserFromListB(Object mailFromUserA, List<Map<String, String>> usersFromOrgBList) {
