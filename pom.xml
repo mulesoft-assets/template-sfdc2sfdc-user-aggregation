@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.mule</groupId>
@@ -51,7 +50,7 @@
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<ignore />
+										<ignore/>
 									</action>
 								</pluginExecution>
 							</pluginExecutions>
@@ -186,8 +185,7 @@
 						<configuration>
 							<tasks>
 								<!-- Using an ant task to deflate cloveretl-engine.zip -->
-								<unzip dest="${project.build.testOutputDirectory}"
-									src="${project.build.testOutputDirectory}/cloveretl-engine.zip" />
+								<unzip dest="${project.build.testOutputDirectory}" src="${project.build.testOutputDirectory}/cloveretl-engine.zip"/>
 							</tasks>
 						</configuration>
 						<goals>
@@ -426,7 +424,13 @@
 			<version>1.8.4</version>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
+	<dependency>
+<groupId>org.mule.transports</groupId>
+<artifactId>mule-transport-email</artifactId>
+<version>${mule.version}</version>
+<scope>provided</scope>
+</dependency>
+</dependencies>
 
 	<repositories>
 		<repository>
