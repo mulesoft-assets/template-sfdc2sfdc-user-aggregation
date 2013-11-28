@@ -19,7 +19,7 @@ http://www.mulesoft.org/schema/mule/smtp http://www.mulesoft.org/schema/mule/smt
 http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd">
     
     <flow name="inboundFlow" processingStrategy="synchronous" doc:name="inboundFlow">
-        <http:inbound-endpoint exchange-pattern="one-way" host="localhost" port="8081" path="generatereport" doc:name="Start Report Generation"/>
+        <http:inbound-endpoint exchange-pattern="one-way" host="localhost" port="${http.port}" path="generatereport" doc:name="Start Report Generation"/>
         <flow-ref name="mainFlow" doc:description="Report generation"  doc:name="mainFlow"/>
     </flow>
     
