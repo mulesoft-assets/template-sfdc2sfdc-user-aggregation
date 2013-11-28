@@ -1,18 +1,16 @@
 package org.mule.kicks.transformers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.poi.util.StringUtil;
 import org.mule.api.MuleMessage;
 import org.mule.api.transformer.TransformerException;
 import org.mule.transformer.AbstractMessageTransformer;
-
-import edu.emory.mathcs.backport.java.util.Collections;
 
 /**
  * This transformer will take to list as input and create a third one that will
@@ -40,20 +38,23 @@ public class SFDCUsersMerge extends AbstractMessageTransformer {
 		private String buildKey(Map<String, String> user) {
 			StringBuilder key = new StringBuilder();
 
-			if (StringUtils.isNotBlank(user.get("IDInA")) && StringUtils.isNotBlank(user.get("IDInB"))) {
+			if (StringUtils.isNotBlank(user.get("IDInA"))
+					&& StringUtils.isNotBlank(user.get("IDInB"))) {
 				key.append("~~");
 				key.append(user.get("IDInA"));
 				key.append(user.get("IDInB"));
 				key.append(user.get("Email"));
 			}
 
-			if (StringUtils.isNotBlank(user.get("IDInA")) && StringUtils.isBlank(user.get("IDInB"))) {
+			if (StringUtils.isNotBlank(user.get("IDInA"))
+					&& StringUtils.isBlank(user.get("IDInB"))) {
 				key.append(user.get("IDInA"));
 				key.append("~");
 				key.append(user.get("Email"));
 			}
 
-			if (StringUtils.isBlank(user.get("IDInA")) && StringUtils.isNotBlank(user.get("IDInB"))) {
+			if (StringUtils.isBlank(user.get("IDInA"))
+					&& StringUtils.isNotBlank(user.get("IDInB"))) {
 				key.append("~");
 				key.append(user.get("IDInB"));
 				key.append(user.get("Email"));
@@ -65,10 +66,13 @@ public class SFDCUsersMerge extends AbstractMessageTransformer {
 	};
 
 	@Override
-	public Object transformMessage(MuleMessage message, String outputEncoding) throws TransformerException {
+	public Object transformMessage(MuleMessage message, String outputEncoding)
+			throws TransformerException {
 
-		List<Map<String, String>> usersFromOrgAList = message.getInvocationProperty(QUERY_COMPANY_A);
-		List<Map<String, String>> usersFromOrgBList = message.getInvocationProperty(QUERY_COMPANY_B);
+		List<Map<String, String>> usersFromOrgAList = message
+				.getInvocationProperty(QUERY_COMPANY_A);
+		List<Map<String, String>> usersFromOrgBList = message
+				.getInvocationProperty(QUERY_COMPANY_B);
 
 		List<Map<String, String>> mergedUsersList = new ArrayList<Map<String, String>>();
 
@@ -79,7 +83,8 @@ public class SFDCUsersMerge extends AbstractMessageTransformer {
 			newMergedUser.put("IDInA", userFromA.get("Id"));
 			newMergedUser.put("UserNameInA", userFromA.get("Username"));
 
-			Map<String, String> userFromB = getUserFromList(userFromA.get("Email"), usersFromOrgBList);
+			Map<String, String> userFromB = getUserFromList(
+					userFromA.get("Email"), usersFromOrgBList);
 			if (userFromB != null) {
 				newMergedUser.put("IDInB", userFromB.get("Id"));
 				newMergedUser.put("UserNameInB", userFromB.get("Username"));
@@ -92,7 +97,8 @@ public class SFDCUsersMerge extends AbstractMessageTransformer {
 		}
 
 		for (Map<String, String> userFromB : usersFromOrgBList) {
-			Map<String, String> userFromA = getUserFromList(userFromB.get("Email"), mergedUsersList);
+			Map<String, String> userFromA = getUserFromList(
+					userFromB.get("Email"), mergedUsersList);
 			if (userFromA == null) {
 				Map<String, String> newMergedUser = new HashMap<String, String>();
 
@@ -114,7 +120,8 @@ public class SFDCUsersMerge extends AbstractMessageTransformer {
 
 	}
 
-	private Map<String, String> getUserFromList(String userMail, List<Map<String, String>> orgList) {
+	private Map<String, String> getUserFromList(String userMail,
+			List<Map<String, String>> orgList) {
 		for (Map<String, String> user : orgList) {
 			if (user.get("Email").equals(userMail)) {
 				return user;
