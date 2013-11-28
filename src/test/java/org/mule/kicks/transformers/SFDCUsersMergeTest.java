@@ -36,39 +36,40 @@ public class SFDCUsersMergeTest {
 		SFDCUsersMerge transformer = new SFDCUsersMerge();
 		List<Map<String, String>> mergedList = (List<Map<String, String>>) transformer.transform(message, "UTF-8");
 
+		System.out.println(mergedList);
 		Assert.assertEquals("The merged list obtained is not as expected", createExpectedList(), mergedList);
 
 	}
 
 	private List<Map<String, String>> createExpectedList() {
 		Map<String, String> user0 = new HashMap<String, String>();
+		user0.put("IDInA", "0");
+		user0.put("IDInB", "");
 		user0.put("Email", "some.email.0@fakemail.com");
 		user0.put("Name", "SomeName_0");
 		user0.put("UserNameInA", "username_0_A");
 		user0.put("UserNameInB", "");
-		user0.put("IDInB", "");
-		user0.put("IDInA", "0");
 
 		Map<String, String> user1 = new HashMap<String, String>();
+		user1.put("IDInA", "1");
+		user1.put("IDInB", "1");
 		user1.put("Email", "some.email.1@fakemail.com");
 		user1.put("Name", "SomeName_1");
 		user1.put("UserNameInA", "username_1_A");
 		user1.put("UserNameInB", "username_1_B");
-		user1.put("IDInB", "1");
-		user1.put("IDInA", "1");
 
 		Map<String, String> user2 = new HashMap<String, String>();
+		user2.put("IDInA", "");
+		user2.put("IDInB", "2");
 		user2.put("Email", "some.email.2@fakemail.com");
 		user2.put("Name", "SomeName_2");
 		user2.put("UserNameInA", "");
 		user2.put("UserNameInB", "username_2_B");
-		user2.put("IDInB", "2");
-		user2.put("IDInA", "");
 
 		List<Map<String, String>> userList = new ArrayList<Map<String, String>>();
 		userList.add(user0);
-		userList.add(user1);
 		userList.add(user2);
+		userList.add(user1);
 
 		return userList;
 
