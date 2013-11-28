@@ -16,27 +16,29 @@ http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/jso
 http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schema/mule/ee/data-mapper/current/mule-data-mapper.xsd">
     <data-mapper:config name="csvreport_grf" transformationGraphPath="csvreport.grf" doc:name="DataMapper"/>
     <flow name="mainFlow" doc:name="mainFlow">
-        <flow-ref name="pullDataFromSFDCFlow" doc:name="gatherData"/>
-        <flow-ref name="mergeUsersFlow" doc:name="processData"/>
-        <flow-ref name="reportGenerationFlow" doc:name="formatOutput"/>
+        <flow-ref name="gatherDataFlow" doc:name="gatherDataFlow"/>
+        <flow-ref name="processDataFlow" doc:name="processDataFlow"/>
+        <flow-ref name="formatOutputFlow" doc:name="formatOutputFlow"/>
+        <flow-ref name="outboundFlow" doc:name="outboundFlow"/>
         <exception-strategy ref="defaultChoiseExceptionStrategy" doc:name="Reference Exception Strategy"/>
     </flow>
   
-    <flow name="pullDataFromSFDCFlow" doc:name="pullDataFromSFDCFlow">
+    <sub-flow name="gatherDataFlow" doc:name="gatherDataFlow">
         <enricher source="#[payload]" target="#[flowVars['usersFromOrgA']]" doc:name="Store result in FlowVar 'usersFromOrgA'">
             <sfdc:query-all config-ref="SalesforceA" query="SELECT Name, Email, Username, Id  FROM User" doc:name="Query all users from company A"/>
         </enricher>
         <enricher source="#[payload]" target="#[flowVars['usersFromOrgB']]" doc:name="Store result in FlowVar 'usersFromOrgB'">
             <sfdc:query-all config-ref="SalesforceB" query="SELECT Name, Email, Username, Id  FROM User" doc:name="Query all users from company B"/>
         </enricher>
-    </flow>
-    
-    <flow name="mergeUsersFlow" doc:name="mergeUsersFlow">
+    </sub-flow>
+
+    <sub-flow name="processDataFlow" doc:name="processDataFlow">
         <custom-transformer class="org.mule.kicks.transformers.SFDCUsersMerge" doc:name="Users merge transformer"/>
-    </flow>
+    </sub-flow>
     
-    <flow name="reportGenerationFlow" doc:name="reportGenerationFlow">
+    <sub-flow name="formatOutputFlow" doc:name="formatOutputFlow">
         <data-mapper:transform config-ref="csvreport_grf" doc:name="CSV Report"/>
-    </flow>
+        <object-to-string-transformer doc:name="Object to String"/>
+    </sub-flow>
     
 </mule>
