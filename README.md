@@ -1,11 +1,10 @@
-# Handshake IApps
-=====================
+# SFDC2SFDC-UsersReport Mule Kick
 
 Use case: As a admin I want to see a report of SFDC users that belong to each organization to be able to detect inconsistencies between users permissions between organizations.
 
 ## Triggering use case
 
-In order to generate the report you need to hit the http endpoint you configure with ** /generatereport ** path.
+In order to generate the report you need to hit the http endpoint you configure with **/generatereport** path.
 
 ## Configuration
 
