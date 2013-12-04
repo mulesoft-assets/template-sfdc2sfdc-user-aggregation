@@ -1,5 +1,9 @@
 ## Use Case
-As a admin I want to see a report of SFDC users that belong to each organisation to be able to detect inconsistencies between users permissions between organisations.
+As a Salesforce admin I want to generate a report comparing users of two Salesforce Instances to see which users can only be found in one of the two and which users are in both instances. 
+
+This Kick (template) should serve as a foundation for extracting data from two systems, comparing values of fields for the objects, and generating a report on the differences. 
+
+As implemented, it gets users from two instances of Salesforce, compares by the email address of the users, and generates a CSV file which shows users in A, users in B, and Users in A and B. The report is then emailed to a configured group of email addresses.
 
 ## Run it!
 
