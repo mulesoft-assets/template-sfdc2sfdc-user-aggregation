@@ -55,7 +55,7 @@ public class GatherDataFlowTestIT extends FunctionalTestCase {
 			return props.getProperty("config.resources");
 		} catch (Exception e) {
 			throw new IllegalStateException(
-					"Could not find mule-deploy.properties nor mule-config.xml file on classpath. Please add any of those files or override the getConfigResources() method to provide the resources by your own");
+					"Could not find mule-deploy.properties file on classpath. Please add any of those files or override the getConfigResources() method to provide the resources by your own.");
 		}
 	}
 
