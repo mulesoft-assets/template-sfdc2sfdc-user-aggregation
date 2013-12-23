@@ -1,6 +1,7 @@
 package org.mule.kicks.integration;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -48,7 +49,14 @@ public class GatherDataFlowTestIT extends FunctionalTestCase {
 
 	@Override
 	protected String getConfigResources() {
-		return "config.xml,endpoints.xml,businesslogic.xml,errorhandling.xml";
+		Properties props = new Properties();
+		try {
+			props.load(new FileInputStream("./src/main/app/mule-deploy.properties"));
+			return props.getProperty("config.resources");
+		} catch (Exception e) {
+			throw new IllegalStateException(
+					"Could not find mule-deploy.properties nor mule-config.xml file on classpath. Please add any of those files or override the getConfigResources() method to provide the resources by your own");
+		}
 	}
 
 	@Override
