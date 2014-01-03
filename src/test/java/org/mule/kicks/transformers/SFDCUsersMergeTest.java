@@ -28,10 +28,10 @@ public class SFDCUsersMergeTest {
 	public void testTransform() throws TransformerException {
 		List<Map<String, String>> usersA = createUserLists("A", 0, 1);
 		List<Map<String, String>> usersB = createUserLists("B", 1, 2);
-
+		
 		MuleMessage message = new DefaultMuleMessage(null, muleContext);
-		message.setInvocationProperty(QUERY_COMPANY_A, usersA);
-		message.setInvocationProperty(QUERY_COMPANY_B, usersB);
+		message.setInvocationProperty(QUERY_COMPANY_A, usersA.iterator());
+		message.setInvocationProperty(QUERY_COMPANY_B, usersB.iterator());
 
 		SFDCUsersMerge transformer = new SFDCUsersMerge();
 		List<Map<String, String>> mergedList = (List<Map<String, String>>) transformer.transform(message, "UTF-8");
