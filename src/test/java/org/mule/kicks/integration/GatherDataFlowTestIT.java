@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.mule.MessageExchangePattern;
 import org.mule.api.MuleEvent;
 import org.mule.processor.chain.SubflowInterceptingChainLifecycleWrapper;
+import org.mule.streaming.ConsumerIterator;
 
 /**
  * The objective of this class is to validate the correct behavior of the flows
@@ -41,11 +42,11 @@ public class GatherDataFlowTestIT extends AbstractKickTestCase {
 		Assert.assertTrue("The variable usersFromOrgA is missing.", flowVariables.contains(USERS_FROM_ORG_A));
 		Assert.assertTrue("The variable usersFromOrgB is missing.", flowVariables.contains(USERS_FROM_ORG_B));
 
-		List<Map<String, String>> usersFromOrgA = event.getFlowVariable(USERS_FROM_ORG_A);
-		List<Map<String, String>> usersFromOrgB = event.getFlowVariable(USERS_FROM_ORG_B);
+		ConsumerIterator<Map<String, String>> usersFromOrgA = event.getFlowVariable(USERS_FROM_ORG_A);
+		ConsumerIterator<Map<String, String>> usersFromOrgB = event.getFlowVariable(USERS_FROM_ORG_B);
 
-		Assert.assertFalse("There should be users in the variable usersFromOrgA.", usersFromOrgA.isEmpty());
-		Assert.assertFalse("There should be users in the variable usersFromOrgB.", usersFromOrgB.isEmpty());
+		Assert.assertTrue("There should be users in the variable usersFromOrgA.", usersFromOrgA.size() != 0);
+		Assert.assertTrue("There should be users in the variable usersFromOrgB.", usersFromOrgB.size() != 0);
 
 	}
 
