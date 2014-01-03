@@ -63,6 +63,7 @@ public class SFDCUsersMerge extends AbstractMessageTransformer {
 
 	};
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Object transformMessage(MuleMessage message, String outputEncoding) throws TransformerException {
 
