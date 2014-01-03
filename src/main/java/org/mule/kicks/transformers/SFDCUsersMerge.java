@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -65,8 +66,8 @@ public class SFDCUsersMerge extends AbstractMessageTransformer {
 	@Override
 	public Object transformMessage(MuleMessage message, String outputEncoding) throws TransformerException {
 
-		List<Map<String, String>> usersFromOrgAList = message.getInvocationProperty(QUERY_COMPANY_A);
-		List<Map<String, String>> usersFromOrgBList = message.getInvocationProperty(QUERY_COMPANY_B);
+		List<Map<String, String>> usersFromOrgAList = getList((Iterator<Map<String, String>>) message.getInvocationProperty(QUERY_COMPANY_A));
+		List<Map<String, String>> usersFromOrgBList = getList((Iterator<Map<String, String>>) message.getInvocationProperty(QUERY_COMPANY_B));
 
 		List<Map<String, String>> mergedUsersList = new ArrayList<Map<String, String>>();
 
@@ -119,6 +120,13 @@ public class SFDCUsersMerge extends AbstractMessageTransformer {
 			}
 		}
 		return null;
+	}
+	
+	public static <T> List<T> getList(Iterator<T> iter) {
+	    List<T> list = new ArrayList<T>();
+	    while (iter.hasNext())
+	        list.add(iter.next());
+	    return list;
 	}
 
 }
