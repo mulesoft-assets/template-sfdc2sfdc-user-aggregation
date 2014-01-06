@@ -90,7 +90,7 @@
 					<additionalClasspathElements>
 						<additionalClasspathElement>${MULE_HOME}/conf/</additionalClasspathElement>
 						<!-- Location of the mule licence in Bamboo muleLicenseKey.lic -->
-						<additionalClasspathElement>/home/j2ee-bamboo/license/</additionalClasspathElement>
+						<additionalClasspathElement>/home/j2ee-bamboo/license</additionalClasspathElement>
 					</additionalClasspathElements>
 				</configuration>
 			</plugin>
