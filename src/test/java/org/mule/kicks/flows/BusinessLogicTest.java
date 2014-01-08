@@ -31,16 +31,6 @@ public class BusinessLogicTest extends FunctionalTestCase {
 	private static final String USERS_FROM_ORG_A = "usersFromOrgA";
 	private static final String USERS_FROM_ORG_B = "usersFromOrgB";
 
-	@BeforeClass
-	public static void beforeClass() {
-		System.setProperty("mule.env", "test");
-	}
-
-	@AfterClass
-	public static void afterClass() {
-		System.getProperties().remove("mule.env");
-	}
-
 	@Before
 	public void setUp() {
 
