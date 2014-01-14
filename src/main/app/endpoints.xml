@@ -8,7 +8,7 @@ xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking"
 xmlns="http://www.mulesoft.org/schema/mule/core" 
 xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" 
 xmlns:spring="http://www.springframework.org/schema/beans" 
-version="EE-3.4.1" 
+version="EE-3.5.0" 
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 xsi:schemaLocation="http://www.mulesoft.org/schema/mule/smtps http://www.mulesoft.org/schema/mule/smtps/current/mule-smtps.xsd
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
@@ -18,13 +18,26 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 http://www.mulesoft.org/schema/mule/smtp http://www.mulesoft.org/schema/mule/smtp/current/mule-smtp.xsd
 http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd">
     
-    <flow name="inboundFlow" processingStrategy="synchronous" doc:name="inboundFlow">
+    <flow name="triggerFlow" processingStrategy="synchronous" doc:name="triggerFlow" doc:description="This is the simpliest entry point to start the excecution of your Kick
+Here you should: 
+	* Any inbound endpoint
+	* Handle any input parameter and abstract it so the main logic does not care from wherei it's called
+Here you should not: 
+	* Run validations against external systems
+	* Choose flow of you application based on input parameters">
         <http:inbound-endpoint exchange-pattern="one-way" host="localhost" port="${http.port}" path="generatereport" doc:name="Start Report Generation"/>
-        <flow-ref name="mainFlow" doc:description="Report generation"  doc:name="mainFlow"/>
+        <flow-ref name="mainFlow" doc:description="Report generation"  doc:name="call mainFlow (business logic xm)"/>
     </flow>
     
-    <flow name="outboundFlow" doc:name="outboundFlow">
-        <set-attachment attachmentName="${attachment.name}" value="#[payload]" contentType="text/plain" doc:name="Attach report" doc:description="Set CSV as attachment"/>
+    <flow name="outboundFlow" doc:name="outboundFlow" doc:description="This is the simpliest output point to push the result of the data processing. 
+Here you should: 
+	* Call external systems through outbound endpoints
+Here you should not: 
+	* Perform generic data transformation
+
+The outbountFlow is in this file in order to maintain the logical abstraction of the Kick.
+">
+        <set-attachment attachmentName="${attachment.name}" value="#[payload]" contentType="text/plain" doc:name="Attach report to Email" doc:description="Set CSV as attachment"/>
         <set-payload value="${mail.body}" doc:name="Set mail body"/>
         <smtp:outbound-endpoint host="${smtp.host}" port="${smtp.port}" user="${smtp.user}" password="${smtp.password}" to="${mail.to}" from="${mail.from}" subject="${mail.subject}" responseTimeout="10000" connector-ref="gmailConnector" doc:name="Send mail"/>
     </flow>
