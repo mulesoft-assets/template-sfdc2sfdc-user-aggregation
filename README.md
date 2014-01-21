@@ -116,14 +116,15 @@ This flow has Exception Strategy that basically consists on invoking the *defaul
 ###  Gather Data Flow
 Mainly consisting of two calls (Queries) to SalesForce and storing each response on the Invocation Variable named *usersFromOrgA* or *usersFromOrgA* accordingly.
 
-###  Process Data Flow
-[Java Transformer](http://www.mulesoft.org/documentation/display/current/Java+Transformer+Reference) responsible for gathering the results from the two SalesForce Org Users and ordering the results.
+###  Aggregation Flow
+[Java Transformer](http://www.mulesoft.org/documentation/display/current/Java+Transformer+Reference) responsible for aggregating the results from the two SalesForce Org Users.
 Criteria and format applied:
 + Transformer receives a Mule Message with the two Invocation variables *usersFromOrgA* and *usersFromOrgA* to result in List of Maps with keys: **Name**, **Email**, **IDInA**, **UserNameInA**, **IDInB** and 
 **UserNameInB**.
 + Users will be matched by mail, that is to say, a record in both SFDC organisations with same mail is considered the same user.
 
-+ Results will have the following order:
+###  Format Output Flow
++ [Java Transformer](http://www.mulesoft.org/documentation/display/current/Java+Transformer+Reference) responsible for sorting the list of users in the following order:
 
 1. Users only in Org A
 2. Users only in Org B
@@ -132,7 +133,6 @@ Criteria and format applied:
 All records ordered alphabetically by mail within each category.
 If you want to change this order then the *compare* method should be modified.
 
-###  Format Output Flow
 + CSV Report [DataMapper](http://www.mulesoft.org/documentation/display/current/Datamapper+User+Guide+and+Reference) transforming the List of Maps in CSV with headers **Name**, **Email**, **IDInA**, **UserNameInA**, **IDInB** and **UserNameInB**.
 + An [Object to string transformer](http://www.mulesoft.org/documentation/display/current/Transformers) is used to set the payload as an String. 
 
