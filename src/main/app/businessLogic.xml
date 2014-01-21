@@ -16,7 +16,7 @@ http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/m
 
 This flow should control the direction of the application, and it should be called by the different endpoints that your Kick exposes to trigger it.">
         <flow-ref name="gatherDataFlow" doc:name="call gatherDataFlow"/>
-        <flow-ref name="processDataFlow" doc:name="call processDataFlow"/>
+        <flow-ref name="aggregationFlow" doc:name="call aggregationFlow"/>
         <flow-ref name="formatOutputFlow" doc:name="call formatOutputFlow"/>
         <flow-ref name="outboundFlow" doc:name="call outboundFlow"/>
         <exception-strategy ref="defaultChoiseExceptionStrategy" doc:name="Reference Exception Strategy"/>
@@ -31,12 +31,12 @@ This flow should control the direction of the application, and it should be call
         </enricher>
     </sub-flow>
 
-    <sub-flow name="processDataFlow" doc:name="processDataFlow">
+    <sub-flow name="aggregationFlow" doc:name="aggregationFlow">
         <custom-transformer class="org.mule.kicks.transformers.SFDCUsersMerge" doc:name="Custom component to build merged users list"/>
-        <custom-transformer class="org.mule.kicks.transformers.SortUsersList" doc:name="Custom component to sort users list"/>
     </sub-flow>
     
     <sub-flow name="formatOutputFlow" doc:name="formatOutputFlow">
+        <custom-transformer class="org.mule.kicks.transformers.SortUsersList" doc:name="Custom component to sort users list"/>
         <data-mapper:transform config-ref="csvreport_grf" doc:name="transform Collection of Maps to CSV Format"/>
         <object-to-string-transformer doc:name="CSV Output Object to String"/>
     </sub-flow>
