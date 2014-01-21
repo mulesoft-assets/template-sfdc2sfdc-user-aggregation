@@ -1,5 +1,5 @@
 
-# Mule Kick: SFDC to SFDC Users report
+# Mule Kick: SFDC to SFDC Users aggregation
 
 + [Use Case](#usecase)
 + [Run it!](#runit)
@@ -14,21 +14,23 @@
 
 
 # Use Case <a name="usecase"/>
-As a Salesforce admin I want to generate a report comparing users of two Salesforce Instances to see which users can only be found in one of the two and which users are in both instances. 
+As a Salesforce admin I want to aggregate users from two Salesforce Instances and compare them to see which users can only be found in one of the two and which users are in both instances. 
 
-This Kick (template) should serve as a foundation for extracting data from two systems, comparing values of fields for the objects, and generating a report on the differences. 
+For practical purposes this kick will generate the result in the format of a CSV Report sent by mail.
+
+This Kick (template) should serve as a foundation for extracting data from two systems, aggregating data, comparing values of fields for the objects, and generating a report on the differences. 
 
 As implemented, it gets users from two instances of Salesforce, compares by the email address of the users, and generates a CSV file which shows users in A, users in B, and Users in A and B. The report is then emailed to a configured group of email addresses.
 
 # Run it! <a name="runit"/>
 
-Simple steps to get SFDC to SFDC Users report running 
+Simple steps to get SFDC to SFDC Users aggregation running 
 
 ## Running on CloudHub <a name="runoncloudhub"/>
 
 While [creating your application on CloudHub](http://www.mulesoft.org/documentation/display/current/Hello+World+on+CloudHub) (Or you can do it later as a next step), you need to go to Deployment > Advanced to set all environment variables detailed in **Properties to be configured** as well as the **mule.env**. 
 
-Once your app is all set and started, supposing you choose as domain name `sfdcuserreports` to trigger the use case you just need to hit `http://sfdcuserreports.cloudhub.io/generatereport` and report will be sent to the emails configured.
+Once your app is all set and started, supposing you choose as domain name `sfdcuseraggregation` to trigger the use case you just need to hit `http://sfdcuseraggregation.cloudhub.io/generatereport` and the report will be sent to the emails configured.
 
 ## Running on premise <a name="runonopremise"/>
 Complete all properties in one of the property files, for example in [mule.prod.properties] (../blob/master/src/main/resources/mule.prod.properties) and run your app with the corresponding environment variable to use it. To follow the example, this will be `mule.env=prod`.
@@ -106,7 +108,7 @@ This Kick has an [HTTP Inbound Endpoint](http://www.mulesoft.org/documentation/d
 
 
 ## businessLogic.xml<a name="businesslogicxml"/>
-Functional aspect of the kick is implemented on this XML, directed by one flow responsible of conducting the generation of the report.
+Functional aspect of the kick is implemented on this XML, directed by one flow responsible of conducting the aggregation of data, comparing records and finally formating the output, in this case being a report.
 The *mainFlow* organises the job in three different steps and finally invokes the *outboundFlow* that will deliver the report to the corresponding outbound endpoint.
 This flow has Exception Strategy that basically consists on invoking the *defaultChoiseExceptionStrategy* defined in *errorHandling.xml* file.
 
