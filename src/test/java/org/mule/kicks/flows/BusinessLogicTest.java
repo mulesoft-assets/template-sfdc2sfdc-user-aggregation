@@ -66,7 +66,7 @@ public class BusinessLogicTest extends FunctionalTestCase {
 
 	@SuppressWarnings("rawtypes")
 	@Test
-	public void testProcessDataFlow() throws Exception {
+	public void testAggregationFlow() throws Exception {
 		List<Map<String, String>> usersFromOrgA = createUserLists("A", 0, 1);
 		List<Map<String, String>> usersFromOrgB = createUserLists("B", 1, 2);
 
@@ -74,7 +74,7 @@ public class BusinessLogicTest extends FunctionalTestCase {
 		testEvent.getMessage().setInvocationProperty(USERS_FROM_ORG_A, usersFromOrgA.iterator());
 		testEvent.getMessage().setInvocationProperty(USERS_FROM_ORG_B, usersFromOrgB.iterator());
 
-		SubflowInterceptingChainLifecycleWrapper flow = getSubFlow("processDataFlow");
+		SubflowInterceptingChainLifecycleWrapper flow = getSubFlow("aggregationFlow");
 		flow.initialise();
 		MuleEvent event = flow.process(testEvent);
 
@@ -91,7 +91,7 @@ public class BusinessLogicTest extends FunctionalTestCase {
 		testEvent.getMessage().setInvocationProperty(USERS_FROM_ORG_A, usersFromOrgA.iterator());
 		testEvent.getMessage().setInvocationProperty(USERS_FROM_ORG_B, usersFromOrgB.iterator());
 
-		SubflowInterceptingChainLifecycleWrapper flow = getSubFlow("processDataFlow");
+		SubflowInterceptingChainLifecycleWrapper flow = getSubFlow("aggregationFlow");
 		flow.initialise();
 		MuleEvent event = flow.process(testEvent);
 
