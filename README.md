@@ -4,6 +4,7 @@
 + [Use Case](#usecase)
 + [Run it!](#runit)
     * [Running on CloudHub](#runoncloudhub)
+       	* [Deploying your Kick on CloudHub](#deployingyourkickoncloudhub)
     * [Running on premise](#runonopremise)
         * [Properties to be configured](#propertiestobeconfigured)
 + [Customize It!](#customizeit)
@@ -11,7 +12,8 @@
     * [endpoints.xml](#endpointsxml)
     * [businessLogic.xml](#businesslogicxml)
     * [errorHandling.xml](#errorhandlingxml)
-
++ [Testing the Kick](#testingthekick)
+    
 
 # Use Case <a name="usecase"/>
 As a Salesforce admin I want to aggregate users from two Salesforce Instances and compare them to see which users can only be found in one of the two and which users are in both instances. 
@@ -31,6 +33,10 @@ Simple steps to get SFDC to SFDC Users aggregation running
 While [creating your application on CloudHub](http://www.mulesoft.org/documentation/display/current/Hello+World+on+CloudHub) (Or you can do it later as a next step), you need to go to Deployment > Advanced to set all environment variables detailed in **Properties to be configured** as well as the **mule.env**. 
 
 Once your app is all set and started, supposing you choose as domain name `sfdcuseraggregation` to trigger the use case you just need to hit `http://sfdcuseraggregation.cloudhub.io/generatereport` and the report will be sent to the emails configured.
+
+### Deploying your Kick on CloudHub <a name="deployingyourkickoncloudhub"/>
+Mule Studio provides you with really easy way to deploy your Kick directly to CloudHub, for the specific steps to do so please check this [link](http://www.mulesoft.org/documentation/display/current/Deploying+Mule+Applications#DeployingMuleApplications-DeploytoCloudHub)
+
 
 ## Running on premise <a name="runonopremise"/>
 Complete all properties in one of the property files, for example in [mule.prod.properties] (../blob/master/src/main/resources/mule.prod.properties) and run your app with the corresponding environment variable to use it. To follow the example, this will be `mule.env=prod`.
@@ -95,7 +101,7 @@ In the visual editor they can be found on the *Global Element* tab.
 This is the file where you will found the inbound and outbound sides of your integration app.
 This Kick has an [HTTP Inbound Endpoint](http://www.mulesoft.org/documentation/display/current/HTTP+Endpoint+Reference) as the way to trigger the use case and an [SMTP Transport](http://www.mulesoft.org/documentation/display/current/SMTP+Transport+Reference) as the outbound way to send the report.
 
-###  Inbound Flow
+###  Trigger Flow
 **HTTP Inbound Endpoint** - Start Report Generation
 + `${http.port}` is set as a property to be defined either on a property file or in CloudHub environment variables.
 + The path configured by default is `generatereport` and you are free to change for the one you prefer.
@@ -119,7 +125,7 @@ Mainly consisting of two calls (Queries) to SalesForce and storing each response
 ###  Aggregation Flow
 [Java Transformer](http://www.mulesoft.org/documentation/display/current/Java+Transformer+Reference) responsible for aggregating the results from the two SalesForce Org Users.
 Criteria and format applied:
-+ Transformer receives a Mule Message with the two Invocation variables *usersFromOrgA* and *usersFromOrgA* to result in List of Maps with keys: **Name**, **Email**, **IDInA**, **UserNameInA**, **IDInB** and 
++ Transformer receives a Mule Message with the two Invocation variables *usersFromOrgA* and *usersFromOrgB* to result in List of Maps with keys: **Name**, **Email**, **IDInA**, **UserNameInA**, **IDInB** and 
 **UserNameInB**.
 + Users will be matched by mail, that is to say, a record in both SFDC organisations with same mail is considered the same user.
 
@@ -139,3 +145,19 @@ If you want to change this order then the *compare* method should be modified.
 
 ## errorHandling.xml<a name="errorhandlingxml"/>
 Contains a [Catch Exception Strategy](http://www.mulesoft.org/documentation/display/current/Catch+Exception+Strategy) that is only Logging the exception thrown (If so). As you imagine, this is the right place to handle how your integration will react depending on the different exceptions. 
+
+## Testing the Kick <a name="testingthekick"/>
+
+You will notice that the Kick has been shipped with test.
+These devidi them self into two categories:
+
++ Unit Tests
++ Integration Tests
+
+You can run any of them by just doing right click on the class and clicking on run as Junit test.
+
+Do bear in mind that you'll have to tell the test classes which property file to use.
+For you convinience we have added a file mule.test.properties located in "src/test/resources".
+In the run configurations of the test just make sure to add the following property:
+
++ -Dmule.env=test
