@@ -1,10 +1,7 @@
 package org.mule.kicks.transformers;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -65,9 +62,9 @@ public class SortUsersList extends AbstractMessageTransformer {
 	public Object transformMessage(MuleMessage message, String outputEncoding) throws TransformerException {
 
 		List<Map<String, String>> sortedUsersList = (List<Map<String, String>>) message.getPayload();
-		
+
 		Collections.sort(sortedUsersList, recordComparator);
-		
+
 		return sortedUsersList;
 
 	}
