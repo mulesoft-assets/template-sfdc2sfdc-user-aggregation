@@ -18,10 +18,10 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 http://www.mulesoft.org/schema/mule/smtp http://www.mulesoft.org/schema/mule/smtp/current/mule-smtp.xsd
 http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd">
     
-    <flow name="triggerFlow" processingStrategy="synchronous" doc:name="triggerFlow" doc:description="This is the simpliest entry point to start the excecution of your Kick
+    <flow name="triggerFlow" processingStrategy="synchronous" doc:name="triggerFlow" doc:description="This is the simplest entry point to start the execution of your Kick
 Here you should: 
 	* Any inbound endpoint
-	* Handle any input parameter and abstract it so the main logic does not care from wherei it's called
+	* Handle any input parameter and abstract it so the main logic does not care from where it's called
 Here you should not: 
 	* Run validations against external systems
 	* Choose flow of you application based on input parameters">
