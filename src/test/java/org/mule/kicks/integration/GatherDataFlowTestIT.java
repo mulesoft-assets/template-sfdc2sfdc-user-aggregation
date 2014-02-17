@@ -6,11 +6,13 @@ import java.util.Set;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.mule.MessageExchangePattern;
 import org.mule.api.MuleEvent;
 import org.mule.processor.chain.SubflowInterceptingChainLifecycleWrapper;
 import org.mule.streaming.ConsumerIterator;
+import org.mule.tck.junit4.rule.DynamicPort;
 
 /**
  * The objective of this class is to validate the correct behavior of the flows
@@ -22,6 +24,9 @@ public class GatherDataFlowTestIT extends AbstractKickTestCase {
 	private static final String USERS_FROM_ORG_A = "usersFromOrgA";
 	private static final String USERS_FROM_ORG_B = "usersFromOrgB";
 
+	@Rule
+	public DynamicPort port = new DynamicPort ("http.port");
+	
 	@Before
 	public void setUp() {
 	}
