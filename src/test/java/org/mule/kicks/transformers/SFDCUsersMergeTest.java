@@ -16,6 +16,7 @@ import org.mule.api.MuleContext;
 import org.mule.api.MuleMessage;
 import org.mule.api.transformer.TransformerException;
 
+@SuppressWarnings("unchecked")
 @RunWith(MockitoJUnitRunner.class)
 public class SFDCUsersMergeTest {
 	private static final String QUERY_COMPANY_A = "usersFromOrgA";
@@ -28,7 +29,7 @@ public class SFDCUsersMergeTest {
 	public void testMerge() throws TransformerException {
 		List<Map<String, String>> usersA = createUserLists("A", 0, 1);
 		List<Map<String, String>> usersB = createUserLists("B", 1, 2);
-		
+
 		MuleMessage message = new DefaultMuleMessage(null, muleContext);
 		message.setInvocationProperty(QUERY_COMPANY_A, usersA.iterator());
 		message.setInvocationProperty(QUERY_COMPANY_B, usersB.iterator());
@@ -65,7 +66,6 @@ public class SFDCUsersMergeTest {
 		user2.put("Name", "SomeName_2");
 		user2.put("UserNameInA", "");
 		user2.put("UserNameInB", "username_2_B");
-
 
 		List<Map<String, String>> userList = new ArrayList<Map<String, String>>();
 		userList.add(user0);

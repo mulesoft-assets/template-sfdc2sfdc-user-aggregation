@@ -13,8 +13,7 @@ import org.mule.transformer.AbstractMessageTransformer;
 import com.google.common.collect.Lists;
 
 /**
- * This transformer will take to list as input and create a third one that will
- * be the merge of the previous two. The identity of an element of the list is
+ * This transformer will take to list as input and create a third one that will be the merge of the previous two. The identity of an element of the list is
  * defined by its email.
  * 
  * @author
@@ -87,7 +86,8 @@ public class SFDCUsersMerge extends AbstractMessageTransformer {
 
 	private Map<String, String> findUserInList(String accountName, List<Map<String, String>> orgList) {
 		for (Map<String, String> account : orgList) {
-			if (account.get("Email").equals(accountName)) {
+			if (account.get("Email")
+						.equals(accountName)) {
 				return account;
 			}
 		}
