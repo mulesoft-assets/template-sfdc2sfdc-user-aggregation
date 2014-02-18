@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.mule.api.config.MuleProperties;
 import org.mule.construct.Flow;
 import org.mule.processor.chain.SubflowInterceptingChainLifecycleWrapper;
@@ -43,8 +41,11 @@ public class AbstractKickTestCase extends FunctionalTestCase {
 		File[] listOfFiles = testFlowsFolder.listFiles();
 		if (listOfFiles != null) {
 			for (File f : listOfFiles) {
-				if (f.isFile() && f.getName().endsWith("xml")) {
-					resources.append(",").append(TEST_FLOWS_FOLDER_PATH).append(f.getName());
+				if (f.isFile() && f.getName()
+									.endsWith("xml")) {
+					resources.append(",")
+								.append(TEST_FLOWS_FOLDER_PATH)
+								.append(f.getName());
 				}
 			}
 			return resources.toString();
@@ -66,11 +67,13 @@ public class AbstractKickTestCase extends FunctionalTestCase {
 	}
 
 	protected Flow getFlow(String flowName) {
-		return (Flow) muleContext.getRegistry().lookupObject(flowName);
+		return (Flow) muleContext.getRegistry()
+									.lookupObject(flowName);
 	}
 
 	protected SubflowInterceptingChainLifecycleWrapper getSubFlow(String flowName) {
-		return (SubflowInterceptingChainLifecycleWrapper) muleContext.getRegistry().lookupObject(flowName);
+		return (SubflowInterceptingChainLifecycleWrapper) muleContext.getRegistry()
+																		.lookupObject(flowName);
 	}
 
 }

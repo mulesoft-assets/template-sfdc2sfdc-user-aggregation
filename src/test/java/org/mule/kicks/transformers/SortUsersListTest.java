@@ -16,17 +16,15 @@ import org.mule.api.MuleContext;
 import org.mule.api.MuleMessage;
 import org.mule.api.transformer.TransformerException;
 
+@SuppressWarnings("unchecked")
 @RunWith(MockitoJUnitRunner.class)
 public class SortUsersListTest {
-	private static final String QUERY_COMPANY_A = "usersFromOrgA";
-	private static final String QUERY_COMPANY_B = "usersFromOrgB";
-
 	@Mock
 	private MuleContext muleContext;
 
 	@Test
 	public void testSort() throws TransformerException {
-		
+
 		MuleMessage message = new DefaultMuleMessage(createOriginalList(), muleContext);
 
 		SortUsersList transformer = new SortUsersList();
@@ -62,7 +60,6 @@ public class SortUsersListTest {
 		user2.put("UserNameInA", "");
 		user2.put("UserNameInB", "username_2_B");
 
-
 		List<Map<String, String>> userList = new ArrayList<Map<String, String>>();
 		userList.add(user0);
 		userList.add(user2);
@@ -97,7 +94,6 @@ public class SortUsersListTest {
 		user2.put("UserNameInA", "");
 		user2.put("UserNameInB", "username_2_B");
 
-
 		List<Map<String, String>> userList = new ArrayList<Map<String, String>>();
 		userList.add(user0);
 		userList.add(user1);
@@ -106,5 +102,5 @@ public class SortUsersListTest {
 		return userList;
 
 	}
-	
+
 }

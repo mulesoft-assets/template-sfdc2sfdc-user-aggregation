@@ -1,22 +1,17 @@
 package org.mule.kicks.integration;
 
-import java.util.Map;
-import java.util.Set;
-
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.mule.MessageExchangePattern;
 import org.mule.api.MuleEvent;
 import org.mule.processor.chain.SubflowInterceptingChainLifecycleWrapper;
 import org.mule.streaming.ConsumerIterator;
 import org.mule.tck.junit4.rule.DynamicPort;
 
+import java.util.Map;
+import java.util.Set;
+
 /**
- * The objective of this class is to validate the correct behavior of the flows
- * for this Mule Kick that make calls to external systems.
+ * The objective of this class is to validate the correct behavior of the flows for this Mule Kick that make calls to external systems.
  * 
  * @author damiansima
  */
@@ -25,8 +20,8 @@ public class GatherDataFlowTestIT extends AbstractKickTestCase {
 	private static final String USERS_FROM_ORG_B = "usersFromOrgB";
 
 	@Rule
-	public DynamicPort port = new DynamicPort ("http.port");
-	
+	public DynamicPort port = new DynamicPort("http.port");
+
 	@Before
 	public void setUp() {
 	}

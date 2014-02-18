@@ -22,8 +22,7 @@ import org.mule.processor.chain.SubflowInterceptingChainLifecycleWrapper;
 import org.mule.tck.junit4.FunctionalTestCase;
 
 /**
- * The objective of this class is to validate the correct behavior of the flows
- * for this Mule Kick.
+ * The objective of this class is to validate the correct behavior of the flows for this Mule Kick.
  * 
  * @author damiansima
  */
@@ -71,15 +70,19 @@ public class BusinessLogicTest extends FunctionalTestCase {
 		List<Map<String, String>> usersFromOrgB = createUserLists("B", 1, 2);
 
 		MuleEvent testEvent = getTestEvent("", MessageExchangePattern.REQUEST_RESPONSE);
-		testEvent.getMessage().setInvocationProperty(USERS_FROM_ORG_A, usersFromOrgA.iterator());
-		testEvent.getMessage().setInvocationProperty(USERS_FROM_ORG_B, usersFromOrgB.iterator());
+		testEvent.getMessage()
+					.setInvocationProperty(USERS_FROM_ORG_A, usersFromOrgA.iterator());
+		testEvent.getMessage()
+					.setInvocationProperty(USERS_FROM_ORG_B, usersFromOrgB.iterator());
 
 		SubflowInterceptingChainLifecycleWrapper flow = getSubFlow("aggregationFlow");
 		flow.initialise();
 		MuleEvent event = flow.process(testEvent);
 
-		Assert.assertTrue("The payload should not be null.", event.getMessage().getPayload() != null);
-		Assert.assertFalse("The user list should not be empty.", ((List) event.getMessage().getPayload()).isEmpty());
+		Assert.assertTrue("The payload should not be null.", event.getMessage()
+																	.getPayload() != null);
+		Assert.assertFalse("The user list should not be empty.", ((List) event.getMessage()
+																				.getPayload()).isEmpty());
 	}
 
 	@Test
@@ -88,8 +91,10 @@ public class BusinessLogicTest extends FunctionalTestCase {
 		List<Map<String, String>> usersFromOrgB = createUserLists("B", 1, 2);
 
 		MuleEvent testEvent = getTestEvent("", MessageExchangePattern.REQUEST_RESPONSE);
-		testEvent.getMessage().setInvocationProperty(USERS_FROM_ORG_A, usersFromOrgA.iterator());
-		testEvent.getMessage().setInvocationProperty(USERS_FROM_ORG_B, usersFromOrgB.iterator());
+		testEvent.getMessage()
+					.setInvocationProperty(USERS_FROM_ORG_A, usersFromOrgA.iterator());
+		testEvent.getMessage()
+					.setInvocationProperty(USERS_FROM_ORG_B, usersFromOrgB.iterator());
 
 		SubflowInterceptingChainLifecycleWrapper flow = getSubFlow("aggregationFlow");
 		flow.initialise();
@@ -99,15 +104,18 @@ public class BusinessLogicTest extends FunctionalTestCase {
 		flow.initialise();
 		event = flow.process(event);
 
-		Assert.assertTrue("The payload should not be null.", event.getMessage().getPayload() != null);
+		Assert.assertTrue("The payload should not be null.", event.getMessage()
+																	.getPayload() != null);
 	}
 
 	private Flow getFlow(String flowName) {
-		return (Flow) muleContext.getRegistry().lookupObject(flowName);
+		return (Flow) muleContext.getRegistry()
+									.lookupObject(flowName);
 	}
 
 	private SubflowInterceptingChainLifecycleWrapper getSubFlow(String flowName) {
-		return (SubflowInterceptingChainLifecycleWrapper) muleContext.getRegistry().lookupObject(flowName);
+		return (SubflowInterceptingChainLifecycleWrapper) muleContext.getRegistry()
+																		.lookupObject(flowName);
 	}
 
 	private List<Map<String, String>> createUserLists(String orgId, int start, int end) {
