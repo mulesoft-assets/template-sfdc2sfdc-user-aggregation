@@ -1,4 +1,4 @@
-package org.mule.kicks.flows;
+package org.mule.templates.flows;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,11 +22,11 @@ import org.mule.processor.chain.SubflowInterceptingChainLifecycleWrapper;
 import org.mule.tck.junit4.FunctionalTestCase;
 
 /**
- * The objective of this class is to validate the correct behavior of the flows for this Mule Kick.
+ * The objective of this class is to validate the correct behavior of the flows for this Mule Template.
  * 
  * @author damiansima
  */
-public class BusinessLogicTest extends FunctionalTestCase {
+public class FlowsTest extends FunctionalTestCase {
 	private static final String USERS_FROM_ORG_A = "usersFromOrgA";
 	private static final String USERS_FROM_ORG_B = "usersFromOrgB";
 
