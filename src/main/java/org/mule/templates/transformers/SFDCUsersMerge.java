@@ -16,7 +16,7 @@ import com.google.common.collect.Lists;
  * This transformer will take to list as input and create a third one that will be the merge of the previous two. The identity of an element of the list is
  * defined by its email.
  * 
- * @author
+ * @author cesar.garcia
  */
 public class SFDCUsersMerge extends AbstractMessageTransformer {
 

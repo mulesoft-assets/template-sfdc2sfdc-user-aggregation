@@ -26,13 +26,16 @@ public class SortUsersListTest {
 	@Test
 	public void testSort() throws TransformerException {
 
-		MuleMessage message = new DefaultMuleMessage(createOriginalList(), muleContext);
+		MuleMessage message = new DefaultMuleMessage(createOriginalList(),
+				muleContext);
 
 		SortUsersList transformer = new SortUsersList();
-		List<Map<String, String>> sortedList = (List<Map<String, String>>) transformer.transform(message, "UTF-8");
+		List<Map<String, String>> sortedList = (List<Map<String, String>>) transformer
+				.transform(message, "UTF-8");
 
 		System.out.println(sortedList);
-		Assert.assertEquals("The merged list obtained is not as expected", createExpectedList(), sortedList);
+		Assert.assertEquals("The merged list obtained is not as expected",
+				createExpectedList(), sortedList);
 
 	}
 
