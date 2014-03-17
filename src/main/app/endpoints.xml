@@ -18,7 +18,7 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 http://www.mulesoft.org/schema/mule/smtp http://www.mulesoft.org/schema/mule/smtp/current/mule-smtp.xsd
 http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd">
     
-    <flow name="triggerFlow" processingStrategy="synchronous" doc:name="triggerFlow" doc:description="This is the simplest entry point to start the execution of your Kick
+    <flow name="triggerFlow" processingStrategy="synchronous" doc:name="triggerFlow" doc:description="This is the simplest entry point to start the execution of your Template
 Here you should: 
 	* Any inbound endpoint
 	* Handle any input parameter and abstract it so the main logic does not care from where it's called
@@ -35,7 +35,7 @@ Here you should:
 Here you should not: 
 	* Perform generic data transformation
 
-The outbountFlow is in this file in order to maintain the logical abstraction of the Kick.
+The outbountFlow is in this file in order to maintain the logical abstraction of the Template.
 ">
         <set-attachment attachmentName="${attachment.name}" value="#[payload]" contentType="text/plain" doc:name="Attach report to Email" doc:description="Set CSV as attachment"/>
         <set-payload value="${mail.body}" doc:name="Set mail body"/>
