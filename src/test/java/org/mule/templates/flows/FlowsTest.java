@@ -22,7 +22,8 @@ import org.mule.processor.chain.SubflowInterceptingChainLifecycleWrapper;
 import org.mule.tck.junit4.FunctionalTestCase;
 
 /**
- * The objective of this class is to validate the correct behavior of the flows for this Mule Template.
+ * The objective of this class is to validate the correct behavior of the flows
+ * for this Mule Template.
  * 
  * @author damiansima
  */
@@ -43,7 +44,8 @@ public class FlowsTest extends FunctionalTestCase {
 	protected String getConfigResources() {
 		Properties props = new Properties();
 		try {
-			props.load(new FileInputStream("./src/main/app/mule-deploy.properties"));
+			props.load(new FileInputStream(
+					"./src/main/app/mule-deploy.properties"));
 			return props.getProperty("config.resources");
 		} catch (Exception e) {
 			throw new IllegalStateException(
@@ -58,7 +60,8 @@ public class FlowsTest extends FunctionalTestCase {
 		String pathToResource = "./mappings";
 		File graphFile = new File(pathToResource);
 
-		properties.put(MuleProperties.APP_HOME_DIRECTORY_PROPERTY, graphFile.getAbsolutePath());
+		properties.put(MuleProperties.APP_HOME_DIRECTORY_PROPERTY,
+				graphFile.getAbsolutePath());
 
 		return properties;
 	}
@@ -69,20 +72,21 @@ public class FlowsTest extends FunctionalTestCase {
 		List<Map<String, String>> usersFromOrgA = createUserLists("A", 0, 1);
 		List<Map<String, String>> usersFromOrgB = createUserLists("B", 1, 2);
 
-		MuleEvent testEvent = getTestEvent("", MessageExchangePattern.REQUEST_RESPONSE);
-		testEvent.getMessage()
-					.setInvocationProperty(USERS_FROM_ORG_A, usersFromOrgA.iterator());
-		testEvent.getMessage()
-					.setInvocationProperty(USERS_FROM_ORG_B, usersFromOrgB.iterator());
+		MuleEvent testEvent = getTestEvent("",
+				MessageExchangePattern.REQUEST_RESPONSE);
+		testEvent.getMessage().setInvocationProperty(USERS_FROM_ORG_A,
+				usersFromOrgA.iterator());
+		testEvent.getMessage().setInvocationProperty(USERS_FROM_ORG_B,
+				usersFromOrgB.iterator());
 
 		SubflowInterceptingChainLifecycleWrapper flow = getSubFlow("aggregationFlow");
 		flow.initialise();
 		MuleEvent event = flow.process(testEvent);
 
 		Assert.assertTrue("The payload should not be null.", event.getMessage()
-																	.getPayload() != null);
-		Assert.assertFalse("The user list should not be empty.", ((List) event.getMessage()
-																				.getPayload()).isEmpty());
+				.getPayload() != null);
+		Assert.assertFalse("The user list should not be empty.", ((List) event
+				.getMessage().getPayload()).isEmpty());
 	}
 
 	@Test
@@ -90,11 +94,12 @@ public class FlowsTest extends FunctionalTestCase {
 		List<Map<String, String>> usersFromOrgA = createUserLists("A", 0, 1);
 		List<Map<String, String>> usersFromOrgB = createUserLists("B", 1, 2);
 
-		MuleEvent testEvent = getTestEvent("", MessageExchangePattern.REQUEST_RESPONSE);
-		testEvent.getMessage()
-					.setInvocationProperty(USERS_FROM_ORG_A, usersFromOrgA.iterator());
-		testEvent.getMessage()
-					.setInvocationProperty(USERS_FROM_ORG_B, usersFromOrgB.iterator());
+		MuleEvent testEvent = getTestEvent("",
+				MessageExchangePattern.REQUEST_RESPONSE);
+		testEvent.getMessage().setInvocationProperty(USERS_FROM_ORG_A,
+				usersFromOrgA.iterator());
+		testEvent.getMessage().setInvocationProperty(USERS_FROM_ORG_B,
+				usersFromOrgB.iterator());
 
 		SubflowInterceptingChainLifecycleWrapper flow = getSubFlow("aggregationFlow");
 		flow.initialise();
@@ -105,15 +110,11 @@ public class FlowsTest extends FunctionalTestCase {
 		event = flow.process(event);
 
 		Assert.assertTrue("The payload should not be null.", event.getMessage()
-																	.getPayload() != null);
+				.getPayload() != null);
 	}
 
-	private Flow getFlow(String flowName) {
-		return (Flow) muleContext.getRegistry()
-									.lookupObject(flowName);
-	}
-
-	private List<Map<String, String>> createUserLists(String orgId, int start, int end) {
+	private List<Map<String, String>> createUserLists(String orgId, int start,
+			int end) {
 		List<Map<String, String>> userList = new ArrayList<Map<String, String>>();
 		for (int i = start; i <= end; i++) {
 			userList.add(createUser(orgId, i));
