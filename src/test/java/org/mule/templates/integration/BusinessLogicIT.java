@@ -1,4 +1,4 @@
-package org.mule.kicks.integration;
+package org.mule.templates.integration;
 
 import org.junit.*;
 import org.mule.MessageExchangePattern;
@@ -11,11 +11,11 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * The objective of this class is to validate the correct behavior of the flows for this Mule Kick that make calls to external systems.
+ * The objective of this class is to validate the correct behavior of the flows for this Mule Template that make calls to external systems.
  * 
  * @author damiansima
  */
-public class GatherDataFlowTestIT extends AbstractKickTestCase {
+public class BusinessLogicIT extends AbstractTemplateTestCase {
 	private static final String USERS_FROM_ORG_A = "usersFromOrgA";
 	private static final String USERS_FROM_ORG_B = "usersFromOrgB";
 
