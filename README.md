@@ -1,10 +1,10 @@
 
-# Mule Kick: SFDC to SFDC Users aggregation
+# Anypoint Template: SFDC to SFDC Users aggregation
 
 + [Use Case](#usecase)
 + [Run it!](#runit)
     * [Running on CloudHub](#runoncloudhub)
-       	* [Deploying your Kick on CloudHub](#deployingyourkickoncloudhub)
+       	* [Deploying your Template on CloudHub](#deployingyourtemplateoncloudhub)
     * [Running on premise](#runonopremise)
         * [Properties to be configured](#propertiestobeconfigured)
 + [Customize It!](#customizeit)
@@ -12,15 +12,15 @@
     * [endpoints.xml](#endpointsxml)
     * [businessLogic.xml](#businesslogicxml)
     * [errorHandling.xml](#errorhandlingxml)
-+ [Testing the Kick](#testingthekick)
++ [Testing the Template](#testingthetemplate)
     
 
 # Use Case <a name="usecase"/>
 As a Salesforce admin I want to aggregate users from two Salesforce Instances and compare them to see which users can only be found in one of the two and which users are in both instances. 
 
-For practical purposes this kick will generate the result in the format of a CSV Report sent by mail.
+For practical purposes this Template will generate the result in the format of a CSV Report sent by mail.
 
-This Kick (template) should serve as a foundation for extracting data from two systems, aggregating data, comparing values of fields for the objects, and generating a report on the differences. 
+This Template should serve as a foundation for extracting data from two systems, aggregating data, comparing values of fields for the objects, and generating a report on the differences. 
 
 As implemented, it gets users from two instances of Salesforce, compares by the email address of the users, and generates a CSV file which shows users in A, users in B, and Users in A and B. The report is then emailed to a configured group of email addresses.
 
@@ -34,8 +34,8 @@ While [creating your application on CloudHub](http://www.mulesoft.org/documentat
 
 Once your app is all set and started, supposing you choose as domain name `sfdcuseraggregation` to trigger the use case you just need to hit `http://sfdcuseraggregation.cloudhub.io/generatereport` and the report will be sent to the emails configured.
 
-### Deploying your Kick on CloudHub <a name="deployingyourkickoncloudhub"/>
-Mule Studio provides you with really easy way to deploy your Kick directly to CloudHub, for the specific steps to do so please check this [link](http://www.mulesoft.org/documentation/display/current/Deploying+Mule+Applications#DeployingMuleApplications-DeploytoCloudHub)
+### Deploying your Template on CloudHub <a name="deployingyourtemplateoncloudhub"/>
+Mule Studio provides you with really easy way to deploy your Template directly to CloudHub, for the specific steps to do so please check this [link](http://www.mulesoft.org/documentation/display/current/Deploying+Mule+Applications#DeployingMuleApplications-DeploytoCloudHub)
 
 
 ## Running on premise <a name="runonopremise"/>
@@ -45,7 +45,7 @@ After this, to trigger the use case you just need to hit the local http endpoint
 
 ## Properties to be configured (With examples)<a name="propertiestobeconfigured"/>
 
-In order to use this Mule Kick you need to configure properties (Credentials, configurations, etc.) either in properties file or in CloudHub as Environment Variables. Detail list with examples:
+In order to use this Template you need to configure properties (Credentials, configurations, etc.) either in properties file or in CloudHub as Environment Variables. Detail list with examples:
 
 ### Application configuration
 + http.port `9090` 
@@ -79,8 +79,8 @@ In order to use this Mule Kick you need to configure properties (Credentials, co
 
 # Customize It!<a name="customizeit"/>
 
-This brief guide intends to give a high level idea of how this Kick is built and how you can change it according to your needs.
-As mule applications are based on XML files, this page will be organized by describing all the XML that conform the Kick.
+This brief guide intends to give a high level idea of how this Template is built and how you can change it according to your needs.
+As mule applications are based on XML files, this page will be organized by describing all the XML that conform the Template.
 Of course more files will be found such as Test Classes and [Mule Application Files](http://www.mulesoft.org/documentation/display/current/Application+Format), but to keep it simple we will focus on the XMLs.
 
 Here is a list of the main XML files you'll find in this application:
@@ -99,7 +99,7 @@ In the visual editor they can be found on the *Global Element* tab.
 
 ## endpoints.xml<a name="endpointsxml"/>
 This is the file where you will found the inbound and outbound sides of your integration app.
-This Kick has an [HTTP Inbound Endpoint](http://www.mulesoft.org/documentation/display/current/HTTP+Endpoint+Reference) as the way to trigger the use case and an [SMTP Transport](http://www.mulesoft.org/documentation/display/current/SMTP+Transport+Reference) as the outbound way to send the report.
+This Template has an [HTTP Inbound Endpoint](http://www.mulesoft.org/documentation/display/current/HTTP+Endpoint+Reference) as the way to trigger the use case and an [SMTP Transport](http://www.mulesoft.org/documentation/display/current/SMTP+Transport+Reference) as the outbound way to send the report.
 
 ###  Trigger Flow
 **HTTP Inbound Endpoint** - Start Report Generation
@@ -114,7 +114,7 @@ This Kick has an [HTTP Inbound Endpoint](http://www.mulesoft.org/documentation/d
 
 
 ## businessLogic.xml<a name="businesslogicxml"/>
-Functional aspect of the kick is implemented on this XML, directed by one flow responsible of conducting the aggregation of data, comparing records and finally formating the output, in this case being a report.
+Functional aspect of the Template is implemented on this XML, directed by one flow responsible of conducting the aggregation of data, comparing records and finally formating the output, in this case being a report.
 The *mainFlow* organises the job in three different steps and finally invokes the *outboundFlow* that will deliver the report to the corresponding outbound endpoint.
 This flow has Exception Strategy that basically consists on invoking the *defaultChoiseExceptionStrategy* defined in *errorHandling.xml* file.
 
@@ -146,9 +146,9 @@ If you want to change this order then the *compare* method should be modified.
 ## errorHandling.xml<a name="errorhandlingxml"/>
 Contains a [Catch Exception Strategy](http://www.mulesoft.org/documentation/display/current/Catch+Exception+Strategy) that is only Logging the exception thrown (If so). As you imagine, this is the right place to handle how your integration will react depending on the different exceptions. 
 
-## Testing the Kick <a name="testingthekick"/>
+## Testing the Template <a name="testingthetemplate"/>
 
-You will notice that the Kick has been shipped with test.
+You will notice that the Template has been shipped with test.
 These devidi them self into two categories:
 
 + Unit Tests
