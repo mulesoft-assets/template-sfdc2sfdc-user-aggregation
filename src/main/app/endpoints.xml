@@ -25,7 +25,7 @@ Here you should:
 Here you should not: 
 	* Run validations against external systems
 	* Choose flow of you application based on input parameters">
-        <http:inbound-endpoint exchange-pattern="one-way" host="localhost" port="${http.port}" path="generatereport" doc:name="Start Report Generation"/>
+        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="${http.port}" path="generatereport" doc:name="Start Report Generation"/>
         <flow-ref name="mainFlow" doc:description="Report generation"  doc:name="call mainFlow"/>
     </flow>
     
