@@ -113,11 +113,6 @@ public class BusinessLogicTest extends FunctionalTestCase {
 									.lookupObject(flowName);
 	}
 
-	private SubflowInterceptingChainLifecycleWrapper getSubFlow(String flowName) {
-		return (SubflowInterceptingChainLifecycleWrapper) muleContext.getRegistry()
-																		.lookupObject(flowName);
-	}
-
 	private List<Map<String, String>> createUserLists(String orgId, int start, int end) {
 		List<Map<String, String>> userList = new ArrayList<Map<String, String>>();
 		for (int i = start; i <= end; i++) {
