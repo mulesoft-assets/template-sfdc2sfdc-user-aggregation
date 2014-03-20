@@ -36,12 +36,10 @@ public class SFDCUsersMergeTest {
 		message.setInvocationProperty(QUERY_COMPANY_B, usersB.iterator());
 
 		SFDCUsersMerge transformer = new SFDCUsersMerge();
-		List<Map<String, String>> mergedList = (List<Map<String, String>>) transformer
-				.transform(message, "UTF-8");
+		List<Map<String, String>> mergedList = (List<Map<String, String>>) transformer.transform(message, "UTF-8");
 
 		System.out.println(mergedList);
-		Assert.assertEquals("The merged list obtained is not as expected",
-				createExpectedList(), mergedList);
+		Assert.assertEquals("The merged list obtained is not as expected", createExpectedList(), mergedList);
 
 	}
 
@@ -79,8 +77,7 @@ public class SFDCUsersMergeTest {
 
 	}
 
-	private List<Map<String, String>> createUserLists(String orgId, int start,
-			int end) {
+	private List<Map<String, String>> createUserLists(String orgId, int start, int end) {
 		List<Map<String, String>> userList = new ArrayList<Map<String, String>>();
 		for (int i = start; i <= end; i++) {
 			userList.add(createUser(orgId, i));

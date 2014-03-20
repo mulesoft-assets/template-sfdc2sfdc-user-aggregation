@@ -17,8 +17,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * The objective of this class is to validate the correct behavior of the flows
- * for this Mule Template that make calls to external systems.
+ * The objective of this class is to validate the correct behavior of the flows for this Mule Template that make calls to external systems.
  * 
  * @author damiansima
  */
@@ -53,26 +52,17 @@ public class BusinessLogicIT extends AbstractTemplateTestCase {
 		SubflowInterceptingChainLifecycleWrapper flow = getSubFlow("gatherDataFlow");
 		flow.initialise();
 
-		MuleEvent event = flow.process(getTestEvent("",
-				MessageExchangePattern.REQUEST_RESPONSE));
+		MuleEvent event = flow.process(getTestEvent("", MessageExchangePattern.REQUEST_RESPONSE));
 		Set<String> flowVariables = event.getFlowVariableNames();
 
-		Assert.assertTrue("The variable usersFromOrgA is missing.",
-				flowVariables.contains(USERS_FROM_ORG_A));
-		Assert.assertTrue("The variable usersFromOrgB is missing.",
-				flowVariables.contains(USERS_FROM_ORG_B));
+		Assert.assertTrue("The variable usersFromOrgA is missing.", flowVariables.contains(USERS_FROM_ORG_A));
+		Assert.assertTrue("The variable usersFromOrgB is missing.", flowVariables.contains(USERS_FROM_ORG_B));
 
-		ConsumerIterator<Map<String, String>> usersFromOrgA = event
-				.getFlowVariable(USERS_FROM_ORG_A);
-		ConsumerIterator<Map<String, String>> usersFromOrgB = event
-				.getFlowVariable(USERS_FROM_ORG_B);
+		ConsumerIterator<Map<String, String>> usersFromOrgA = event.getFlowVariable(USERS_FROM_ORG_A);
+		ConsumerIterator<Map<String, String>> usersFromOrgB = event.getFlowVariable(USERS_FROM_ORG_B);
 
-		Assert.assertTrue(
-				"There should be users in the variable usersFromOrgA.",
-				usersFromOrgA.size() != 0);
-		Assert.assertTrue(
-				"There should be users in the variable usersFromOrgB.",
-				usersFromOrgB.size() != 0);
+		Assert.assertTrue("There should be users in the variable usersFromOrgA.", usersFromOrgA.size() != 0);
+		Assert.assertTrue("There should be users in the variable usersFromOrgB.", usersFromOrgB.size() != 0);
 
 	}
 
