@@ -71,9 +71,4 @@ public class AbstractTemplateTestCase extends FunctionalTestCase {
 									.lookupObject(flowName);
 	}
 
-	protected SubflowInterceptingChainLifecycleWrapper getSubFlow(String flowName) {
-		return (SubflowInterceptingChainLifecycleWrapper) muleContext.getRegistry()
-																		.lookupObject(flowName);
-	}
-
 }
