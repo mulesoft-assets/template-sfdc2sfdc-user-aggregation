@@ -1,20 +1,18 @@
 package org.mule.templates.integration;
 
-import org.junit.*;
+import java.util.Map;
+import java.util.Set;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mule.MessageExchangePattern;
 import org.mule.api.MuleEvent;
 import org.mule.processor.chain.SubflowInterceptingChainLifecycleWrapper;
 import org.mule.streaming.ConsumerIterator;
 import org.mule.tck.junit4.rule.DynamicPort;
-import org.mule.templates.builders.SfdcObjectBuilder;
-
-import com.sforce.soap.partner.SaveResult;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * The objective of this class is to validate the correct behavior of the flows for this Mule Template that make calls to external systems.
