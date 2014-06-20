@@ -63,7 +63,6 @@ public class BusinessLogicIT extends AbstractTemplateTestCase {
 
 		Assert.assertTrue("There should be users in the variable usersFromOrgA.", usersFromOrgA.size() != 0);
 		Assert.assertTrue("There should be users in the variable usersFromOrgB.", usersFromOrgB.size() != 0);
-
 	}
 
 }
