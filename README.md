@@ -138,7 +138,7 @@ Of course more files will be found such as Test Classes and [Mule Application Fi
 Here is a list of the main XML files you'll find in this application:
 
 * [config.xml](#configxml)
-* [inboundEndpoints.xml](#inboundendpointsxml)
+* [endpoints.xml](#endpointsxml)
 * [businessLogic.xml](#businesslogicxml)
 * [errorHandling.xml](#errorhandlingxml)
 
@@ -155,14 +155,17 @@ The *mainFlow* organises the job in three different steps and finally invokes th
 This flow has Exception Strategy that basically consists on invoking the *defaultChoiseExceptionStrategy* defined in *errorHandling.xml* file.
 
 
+### Gather Data Flow
 Mainly consisting of two calls (Queries) to SalesForce and storing each response on the Invocation Variable named *usersFromOrgA* or *usersFromOrgA* accordingly.
 
+### Aggregation Flow
 [Java Transformer](http://www.mulesoft.org/documentation/display/current/Java+Transformer+Reference) responsible for aggregating the results from the two SalesForce Org Users.
 Criteria and format applied:
 + Transformer receives a Mule Message with the two Invocation variables *usersFromOrgA* and *usersFromOrgB* to result in List of Maps with keys: **Name**, **Email**, **IDInA**, **UserNameInA**, **IDInB** and 
 **UserNameInB**.
 + Users will be matched by mail, that is to say, a record in both SFDC organisations with same mail is considered the same user.
 
+### Format Output Flow
 + [Java Transformer](http://www.mulesoft.org/documentation/display/current/Java+Transformer+Reference) responsible for sorting the list of users in the following order:
 
 1. Users only in Org A
@@ -181,11 +184,13 @@ If you want to change this order then the *compare* method should be modified.
 This is the file where you will found the inbound and outbound sides of your integration app.
 This Template has an [HTTP Inbound Endpoint](http://www.mulesoft.org/documentation/display/current/HTTP+Endpoint+Reference) as the way to trigger the use case and an [SMTP Transport](http://www.mulesoft.org/documentation/display/current/SMTP+Transport+Reference) as the outbound way to send the report.
 
+### Trigger Flow
 **HTTP Inbound Endpoint** - Start Report Generation
 + `${http.port}` is set as a property to be defined either on a property file or in CloudHub environment variables.
 + The path configured by default is `generatereport` and you are free to change for the one you prefer.
 + The host name for all endpoints in your CloudHub configuration should be defined as `localhost`. CloudHub will then route requests from your application domain URL to the endpoint.
 
+### Outbound Flow
 **SMTP Outbound Endpoint** - Send Mail
 + Both SMTP Server configuration and the actual mail to be sent are defined in this endpoint.
 + This flow is going to be invoked from the flow that does all the functional work: *mainFlow*, the same that is invoked from the Inbound Flow upon triggering of the HTTP Endpoint.
