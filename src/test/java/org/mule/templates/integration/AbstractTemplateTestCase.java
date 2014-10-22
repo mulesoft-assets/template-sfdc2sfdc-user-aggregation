@@ -12,7 +12,6 @@ import java.util.Properties;
 
 import org.mule.api.config.MuleProperties;
 import org.mule.construct.Flow;
-import org.mule.processor.chain.SubflowInterceptingChainLifecycleWrapper;
 import org.mule.tck.junit4.FunctionalTestCase;
 
 /**
