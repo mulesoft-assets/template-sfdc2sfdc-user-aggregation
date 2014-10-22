@@ -39,7 +39,7 @@ public class SFDCUsersMergeTest {
 
 	}
 
-	private List<Map<String, String>> createExpectedList() {
+	static List<Map<String, String>> createExpectedList() {
 		Map<String, String> user0 = new HashMap<String, String>();
 		user0.put("IDInA", "0");
 		user0.put("IDInB", "");
@@ -73,7 +73,7 @@ public class SFDCUsersMergeTest {
 
 	}
 
-	private List<Map<String, String>> createUserLists(String orgId, int start, int end) {
+	static List<Map<String, String>> createUserLists(String orgId, int start, int end) {
 		List<Map<String, String>> userList = new ArrayList<Map<String, String>>();
 		for (int i = start; i <= end; i++) {
 			userList.add(createUser(orgId, i));
@@ -81,7 +81,7 @@ public class SFDCUsersMergeTest {
 		return userList;
 	}
 
-	private Map<String, String> createUser(String orgId, int sequence) {
+	static Map<String, String> createUser(String orgId, int sequence) {
 		Map<String, String> user = new HashMap<String, String>();
 
 		user.put("Id", new Integer(sequence).toString());
