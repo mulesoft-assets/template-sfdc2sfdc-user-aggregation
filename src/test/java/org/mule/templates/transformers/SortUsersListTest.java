@@ -21,7 +21,6 @@ import org.mule.DefaultMuleMessage;
 import org.mule.api.MuleContext;
 import org.mule.api.MuleMessage;
 import org.mule.api.transformer.TransformerException;
-import org.mule.templates.transformers.SortUsersList;
 
 @SuppressWarnings("unchecked")
 @RunWith(MockitoJUnitRunner.class)
@@ -32,7 +31,7 @@ public class SortUsersListTest {
 	@Test
 	public void testSort() throws TransformerException {
 
-		MuleMessage message = new DefaultMuleMessage(createOriginalList(), muleContext);
+		MuleMessage message = new DefaultMuleMessage(createOriginalList().iterator(), muleContext);
 
 		SortUsersList transformer = new SortUsersList();
 		List<Map<String, String>> sortedList = (List<Map<String, String>>) transformer.transform(message, "UTF-8");
