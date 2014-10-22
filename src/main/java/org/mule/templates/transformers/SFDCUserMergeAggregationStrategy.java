@@ -41,13 +41,11 @@ public class SFDCUserMergeAggregationStrategy implements AggregationStrategy {
 		List<Map<String, String>> listB = getLeadsList(muleEventsWithoutException, 1);
 		
 		// events are ordered so the event index corresponds to the index of each route
-		SFDCUsersMerge sfdcLeadMerge = new SFDCUsersMerge();
-		List<Map<String, String>> mergedLeadList = sfdcLeadMerge.mergeList(listA, listB);
+		SFDCUsersMerge sfdcUserMerge = new SFDCUsersMerge();
+		List<Map<String, String>> mergedList = sfdcUserMerge.mergeList(listA, listB);
 		
-//		muleMessage.setPayload(new CopyOnWriteArrayList<Map<String, String>>(mergedLeadList));
-		muleMessage.setPayload(mergedLeadList.iterator());
-		
-		return new DefaultMuleEvent(muleMessage, muleEvent);
+		muleMessage.setPayload(mergedList.iterator());
+		return new DefaultMuleEvent(muleMessage, context.getOriginalEvent());
 	}
 
 	private List<Map<String, String>> getLeadsList(List<MuleEvent> events, int index) {

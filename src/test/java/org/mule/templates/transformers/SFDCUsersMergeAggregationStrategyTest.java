@@ -48,7 +48,7 @@ public class SFDCUsersMergeAggregationStrategyTest extends AbstractTemplateTestC
 		testEvents.add(testEventA);
 		testEvents.add(testEventB);
 		
-		AggregationContext aggregationContext = new AggregationContext(null, testEvents);
+		AggregationContext aggregationContext = new AggregationContext(getTestEvent(""), testEvents);
 		
 		SFDCUserMergeAggregationStrategy sfdcuserMerge = new SFDCUserMergeAggregationStrategy();
 		Iterator<Map<String, String>> iterator = (Iterator<Map<String, String>>) sfdcuserMerge.aggregate(aggregationContext).getMessage().getPayload();
