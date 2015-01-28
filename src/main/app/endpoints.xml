@@ -8,7 +8,7 @@ xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking"
 xmlns="http://www.mulesoft.org/schema/mule/core" 
 xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" 
 xmlns:spring="http://www.springframework.org/schema/beans" 
-version="EE-3.5.0" 
+version="EE-3.6.0" 
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 xsi:schemaLocation="http://www.mulesoft.org/schema/mule/smtps http://www.mulesoft.org/schema/mule/smtps/current/mule-smtps.xsd
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
@@ -17,19 +17,21 @@ http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/m
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 http://www.mulesoft.org/schema/mule/smtp http://www.mulesoft.org/schema/mule/smtp/current/mule-smtp.xsd
 http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="${http.port}" doc:name="HTTP Listener Configuration"/>
     
-    <flow name="triggerFlow" processingStrategy="synchronous" doc:name="triggerFlow" doc:description="This is the simplest entry point to start the execution of your Template
+    <flow name="triggerFlow" processingStrategy="synchronous"  doc:description="This is the simplest entry point to start the execution of your Template
 Here you should: 
 	* Any inbound endpoint
 	* Handle any input parameter and abstract it so the main logic does not care from where it's called
 Here you should not: 
 	* Run validations against external systems
 	* Choose flow of you application based on input parameters">
-        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="${http.port}" path="generatereport" doc:name="Start Report Generation"/>
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/generatereport" doc:name="Start Report Generation"/>
+
         <flow-ref name="mainFlow" doc:description="Report generation"  doc:name="call mainFlow"/>
     </flow>
     
-    <flow name="outboundFlow" doc:name="outboundFlow" doc:description="This is the simpliest output point to push the result of the data processing. 
+    <flow name="outboundFlow"  doc:description="This is the simpliest output point to push the result of the data processing. 
 Here you should: 
 	* Call external systems through outbound endpoints
 Here you should not: 
