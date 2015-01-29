@@ -23,7 +23,6 @@ import org.mule.tck.junit4.rule.DynamicPort;
  * @author damiansima
  */
 public class BusinessLogicIT extends AbstractTemplateTestCase {
-	
 	protected static final String TEMPLATE_NAME = "user-aggregation";
 
 	@Rule

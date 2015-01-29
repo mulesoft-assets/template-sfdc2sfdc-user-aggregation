@@ -19,7 +19,9 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.mule.api.MuleContext;
 import org.mule.api.transformer.TransformerException;
+import org.mule.templates.transformers.SFDCUsersMerge;
 
+@SuppressWarnings("unchecked")
 @RunWith(MockitoJUnitRunner.class)
 public class SFDCUsersMergeTest {
 

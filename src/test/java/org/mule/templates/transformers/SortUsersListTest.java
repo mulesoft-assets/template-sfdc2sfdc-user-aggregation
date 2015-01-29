@@ -30,7 +30,6 @@ public class SortUsersListTest {
 
 	@Test
 	public void testSort() throws TransformerException {
-
 		MuleMessage message = new DefaultMuleMessage(createOriginalList().iterator(), muleContext);
 
 		SortUsersList transformer = new SortUsersList();
