@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <configuration>
 	<placeholders>
-		<placeholder id="template_name">Salesforce to Salesforce User Aggregation</placeholder>
+		<placeholder id="template_name">Salesforce and Salesforce User Aggregation</placeholder>
 	</placeholders>
 	<sections>
 		<section id="use_case">
@@ -44,13 +44,13 @@ After this, to trigger the use case you just need to hit the local http endpoint
 + sfdc.a.username `bob.dylan@orga`
 + sfdc.a.password `DylanPassword123`
 + sfdc.a.securityToken `avsfwCUl7apQs56Xq2AKi3X`
-+ sfdc.a.url `https://login.salesforce.com/services/Soap/u/26.0`
++ sfdc.a.url `https://login.salesforce.com/services/Soap/u/32.0`
 
 #### SalesForce Connector configuration for company B
 + sfdc.b.username `joan.baez@orgb`
 + sfdc.b.password `JoanBaez456`
 + sfdc.b.securityToken `ces56arl7apQs56XTddf34X`
-+ sfdc.b.url `https://login.salesforce.com/services/Soap/u/26.0`
++ sfdc.b.url `https://login.salesforce.com/services/Soap/u/32.0`
 
 
 #### SMPT Services configuration
