@@ -8,7 +8,7 @@
 	<version>2.0.0-SNAPSHOT</version>
 	<packaging>mule-application</packaging>
 
-	<name>template-sfdc2sfdc-contact-aggregation</name>
+	<name>template-sfdc2sfdc-user-aggregation</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
