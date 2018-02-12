@@ -157,7 +157,7 @@ In order to use this Mule Anypoint Template you need to configure properties (Cr
 + sfdc.b.url `https://login.salesforce.com/services/Soap/u/40.0`
 
 
-#### SMPT Services configuration
+#### SMTP Services configuration
 + smtp.host `smtp.gmail.com`
 + smtp.port `587`
 + smtp.user `exampleuser@gmail.com`
@@ -171,15 +171,7 @@ In order to use this Mule Anypoint Template you need to configure properties (Cr
 + attachment.name `OrderedReport.csv`
 
 # API Calls <a name="apicalls"/>
-SalesForce imposes limits on the number of API Calls that can be made. Therefore calculating this amount may be an important factor to consider. User Anypoint Template calls to the API can be calculated using the formula:
-
-***1 + UsersToSync + UsersToSync / CommitSize***
-
-Being ***UsersToSync*** the number of Users to be synchronized on each run. 
-
-The division by ***CommitSize*** is because by default, for each Upsert API Call, Users are gathered in groups of a number defined by the Commit Size property. Also consider that this calls are executed repeatedly every polling cycle.	
-
-For instance if 10 records are fetched from origin instance, then 12 api calls will be made (1 + 10 + 1).
+Salesforce imposes limits on the number of API Calls that can be made. However, we make API call to Salesforce only once during aggregation.
 
 
 # Customize It!<a name="customizeit"/>
