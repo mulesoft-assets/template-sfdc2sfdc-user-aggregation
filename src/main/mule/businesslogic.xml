@@ -10,7 +10,7 @@ http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mu
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd">
-	<flow name="businesslogicFlow" doc:id="20625294-79d3-45a3-90bd-9b44970bc67b">
+	<flow name="businessLogicFlow" doc:id="20625294-79d3-45a3-90bd-9b44970bc67b">
 		<scatter-gather doc:name="Scatter-Gather"
 			doc:id="062ec4ac-b3c3-49f7-94b4-cea2462cf09b">
 			<route>
@@ -88,7 +88,7 @@ sortBySourceExistence(mergedUsers) map (user) -> {
 </email:send>
 </flow>
 <flow name="mainFlow" doc:id="c9d80d54-ed92-4dc2-872f-629f3c0b678f" >
-	<flow-ref doc:name="Call businesslogicFlow" doc:id="7e1b3d52-2256-4af8-b0c5-b8fbee3d1b66" name="businesslogicFlow"/>
+	<flow-ref doc:name="businessLogicFlow" doc:id="7e1b3d52-2256-4af8-b0c5-b8fbee3d1b66" name="businessLogicFlow"/>
 	<error-handler >
 		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="488b507d-e26c-4c56-8759-8bb4f6645d71" type="ANY">
 			<flow-ref doc:name="errorHandlingFlow" doc:id="afdaf73c-0137-4d60-84f6-5c41234771a3" name="errorHandlingFlow"/>
