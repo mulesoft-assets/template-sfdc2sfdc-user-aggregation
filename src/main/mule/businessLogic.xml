@@ -31,16 +31,16 @@ http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/em
 			doc:id="7668acb0-da18-4df8-92a8-0bc58c5ad88b">
 			<ee:message>
 				<ee:set-payload><![CDATA[%dw 2.0
-output application/csv separator=";"
+output application/csv separator=","
 import mergeWith from dw::core::Objects
 var usersA = payload["0"].payload map (user) -> {
-	"UserNameInA": user.Name,
+	"UserNameInA": user.Username,
 	"IDInA": user.Id,
 	"Email": user.Email,
 	"Name": user.Name
 }
 var usersB = payload["1"].payload map (user) -> {
-	"UserNameInB": user.Name,
+	"UserNameInB": user.Username,
 	"IDInB": user.Id,
 	"Email": user.Email,
 	"Name": user.Name
