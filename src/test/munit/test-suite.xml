@@ -15,35 +15,10 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 
 	<configuration-properties doc:name="Configuration properties"
 		doc:id="c382dc50-b83c-41be-ad31-42ccb929d758" file="mule.test.properties" />
-	<configuration-properties doc:name="Configuration properties"
-		doc:id="59fef852-f885-4b1e-baac-96bce830be9f" file="mule-artifact.properties" />
-	<configuration-properties doc:name="Configuration properties"
-		doc:id="a0f29785-69a4-48b7-8ef5-410c95ee7ff2" file="common.properties" />
+        
 	<munit:before-test name="test-suiteBefore_Test"
 		description="Before tests actions" doc:id="7f8facb1-95ae-4456-9448-faf3a3a89dc9">
-		<salesforce:query doc:name="Select Users from instance A"
-			doc:id="cccc4517-db8b-4312-a01f-ae288279705a" config-ref="Salesforce_Sfdc_A_config">
-			<salesforce:salesforce-query>SELECT Name, Email, Username, Id FROM
-				User WHERE Email in (':emailA1',':emailA2')
-			</salesforce:salesforce-query>
-			<salesforce:parameters ><![CDATA[#[output applicaton/java
----
-{
-	"emailA1" : p('email.a'),
-	"emailA2" : p('email.a.b')
-}]]]></salesforce:parameters>
-		</salesforce:query>
-		<salesforce:query doc:name="Select Users from instance B" doc:id="15bd2dc6-04ff-4332-a1a5-6fe8d9fce5f9" config-ref="Salesforce_Sfdc_B_config">
-			<salesforce:salesforce-query >SELECT Name, Email, Username, Id FROM
-				User WHERE Email in (':emailB1',':emailB2')</salesforce:salesforce-query>
-			<salesforce:parameters ><![CDATA[#[output applicaton/java
----
-{
-	"emailB1" : p('email.a.b'),
-	"emailB2" : p('email.b')
-}]]]></salesforce:parameters>
-		</salesforce:query>
-		<munit-tools:mock-when doc:name="Mock email processor to avoid sending email"
+ 		<munit-tools:mock-when doc:name="Mock email processor to avoid sending email"
 			doc:id="17ab3357-3f08-4456-9f14-c41c281e06f1" processor="email:send">
 			<munit-tools:then-return />
 		</munit-tools:mock-when>
@@ -51,7 +26,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 	<munit:test name="test-suite-businessLogicFlowTest"
 		description="Test" doc:id="4ffcda90-21bf-4cd4-9460-09cf6ca578e5">
 		<munit:execution>
-			<flow-ref doc:name="businessLogicFlow" doc:id="3e0601a1-1b47-4974-83b0-8d30726559dd"
+			<flow-ref doc:name="Call businessLogicFlow" doc:id="3e0601a1-1b47-4974-83b0-8d30726559dd"
 				name="businessLogicFlow" />
 			<ee:transform doc:name="Filtering test records"
 				doc:id="903370f0-c852-4d41-a25e-46f41bbe649b">
@@ -59,7 +34,10 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 					<ee:set-payload><![CDATA[%dw 2.0
 output application/java
 ---
-payload filter ($.Email == p('email.a') or $.Email == p('email.b') or $.Email == p('email.a.b'))]]></ee:set-payload>
+payload filter ($.Email == p('email.a') and $.Name == p('name.a')
+	or $.Email == p('email.b') and $.Name == p('name.b')
+	or $.Email == p('email.a.b') and $.Name == p('name.a.b')
+)]]></ee:set-payload>
 				</ee:message>
 			</ee:transform>
 		</munit:execution>
